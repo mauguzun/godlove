@@ -21,16 +21,23 @@ namespace GodLoveMe
         public int ?Follow { get; set; } = null;
         public string Boards { get; set; } = null;
 
-        public bool Proxy { get; set; } = false;
+        public string Proxie { get; set; } = null;
         public bool Selected { get; set; } = false;
 
-        public static List<Account> GetAccounts()
+        public string Group { get; set; } = null;
+
+        public override string ToString()
+        {
+            return this.Email + ':' + this.Password + ':' + this.UserName + "::" + this.Followers + ":" + this.Follow + ":" + this.Boards + ":" + this.Group;
+        }
+
+        public static List<Account> GetAccountExtraInfo()
         {
             List<Account> acounts = new List<Account>();
-            foreach (string line in File.ReadAllLines(@"C:\my_work_files\pinterest\full_info.txt"))
+            foreach (string line in File.ReadAllLines(@"C:\my_work_files\pinterest\full_info_copy.txt"))
             {
                 string[] splited = line.Split(':');
-                acounts.Add(new Account()
+               var acc =  new Account()
                 {
                     Email = splited[0],
                     Password = splited[1],
@@ -38,6 +45,29 @@ namespace GodLoveMe
                     Followers = String.IsNullOrEmpty(splited[4]) ? 0 : int.Parse(splited[4]),
                     Follow = String.IsNullOrEmpty(splited[5]) ? 0 : int.Parse(splited[5]),
                     Boards = splited[6]
+                }; 
+                if(splited.Count() > 6)
+                {
+                    acc.Group = splited[7];
+                }
+                acounts.Add(acc);
+            }
+
+       
+            return acounts;
+        }  
+        public static List<Account> GetAccounts()
+        {
+            List<Account> acounts = new List<Account>();
+            foreach (string line in File.ReadAllLines(@"C:\my_work_files\pinterest\source_all_account_for_blaster.txt"))
+            {
+                string[] splited = line.Split(':');
+                acounts.Add(new Account()
+                {
+                    Email = splited[0],
+                    Password = splited[1],
+                    UserName = splited[2],
+                
                 }); ;
             }
 

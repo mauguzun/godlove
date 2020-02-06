@@ -35,7 +35,7 @@ namespace GodLoveMe.Start
                         string proxie = CookieManager.ProxyFromName(path);
                         Console.WriteLine(proxie);
 
-                        Pinterest.Pinterest pin = new Pinterest.Pinterest(drivers.Driver);
+                    
                         string[] par = Path.GetFileNameWithoutExtension(path).Split(new string[] { "_p_" }, StringSplitOptions.RemoveEmptyEntries);
 
                         if (Follow)
@@ -43,10 +43,15 @@ namespace GodLoveMe.Start
                             drivers.InitDriver(true, par[1].Replace("_", ":"));
 
                         }
-                       
+                        else
+                        {
                             drivers.InitDriver(false, par[1].Replace("_", ":"));
-                       
-                      
+
+                        }
+
+
+                        Pinterest.Pinterest pin = new Pinterest.Pinterest(drivers.Driver);
+
                         pin.Driver = drivers.Driver;
                         pin.Email = Path.GetFileNameWithoutExtension(par[0]);
                         pin.AccountPath = path;

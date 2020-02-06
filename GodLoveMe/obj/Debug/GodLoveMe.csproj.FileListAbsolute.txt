@@ -17,13 +17,12 @@ C:\GodLoveMe\GodLoveMe\bin\Debug\GodLoveMe.pdb
 C:\GodLoveMe\GodLoveMe\bin\Debug\GetProxy.dll
 C:\GodLoveMe\GodLoveMe\bin\Debug\HtmlAgilityPack.dll
 C:\GodLoveMe\GodLoveMe\bin\Debug\Newtonsoft.Json.dll
-C:\GodLoveMe\GodLoveMe\bin\Debug\ProxySharp.dll
 C:\GodLoveMe\GodLoveMe\bin\Debug\WebDriver.dll
 C:\GodLoveMe\GodLoveMe\bin\Debug\HtmlAgilityPack.pdb
 C:\GodLoveMe\GodLoveMe\bin\Debug\HtmlAgilityPack.xml
 C:\GodLoveMe\GodLoveMe\bin\Debug\Newtonsoft.Json.xml
 C:\GodLoveMe\GodLoveMe\bin\Debug\WebDriver.xml
+C:\GodLoveMe\GodLoveMe\obj\Debug\GodLoveMe.csprojAssemblyReference.cache
 C:\GodLoveMe\GodLoveMe\obj\Debug\GodLoveMe.csproj.CopyComplete
 C:\GodLoveMe\GodLoveMe\obj\Debug\GodLoveMe.exe
 C:\GodLoveMe\GodLoveMe\obj\Debug\GodLoveMe.pdb
-C:\GodLoveMe\GodLoveMe\obj\Debug\GodLoveMe.csprojAssemblyReference.cache

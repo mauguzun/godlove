@@ -32,7 +32,7 @@ namespace GodLoveMe
 
 
             AllStart strategy = new DoLogin();
-            strategy.ThreadCount = 4;
+            strategy.ThreadCount = 5;
             switch (design)
             {
                 case 1:

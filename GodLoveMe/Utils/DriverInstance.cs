@@ -66,7 +66,7 @@ namespace AddMeFast
             }
         }
 
-        internal void SuperQuit()
+        public void SuperQuit()
         {
             try
             {

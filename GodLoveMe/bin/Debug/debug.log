@@ -34,3 +34,5 @@
 [0205/000236.848:ERROR:crash_report_exception_handler.cc(97)] PrepareNewCrashReport failed
 [0205/042351.464:ERROR:registration_protocol_win.cc(84)] TransactNamedPipe: The pipe has been ended. (0x6D)
 [0205/042615.059:ERROR:session_end_watcher.cc(157)] CreateWindow: The operation completed successfully. (0x0)
+[0205/181045.564:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+[0206/045546.079:ERROR:registration_protocol_win.cc(84)] TransactNamedPipe: The pipe has been ended. (0x6D)

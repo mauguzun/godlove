@@ -16,7 +16,7 @@ using System.Xml.Serialization;
 
 namespace GodLoveMe.Pinterest
 {
-    class Pinterest
+    public class Pinterest
     {
         public string AccountPath { get; set; } = "";
         public string Email { get; set; } = "email";
@@ -34,7 +34,7 @@ namespace GodLoveMe.Pinterest
 
         public void MakeLoginWithCookie(List<DCookie> dCookie)
         {
-
+           
             try
             {
                 Driver.Url = "https://pinterest.com/";
@@ -43,7 +43,7 @@ namespace GodLoveMe.Pinterest
                     Driver.Manage().Cookies.AddCookie(cookie.GetCookie());
                 }
             }
-            catch { }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
 
 
         }
