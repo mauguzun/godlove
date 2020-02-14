@@ -13,6 +13,8 @@ namespace AddMeFast
 {
     public class CookieManager
     {
+        public static  string ACCOUNTS = @"C:\my_work_files\pinterest\acc\";
+
         public List<DCookie> Load(string filePath)
         {
 
@@ -71,7 +73,7 @@ namespace AddMeFast
             }
             XmlSerializer ser = new XmlSerializer(typeof(List<DCookie>), new XmlRootAttribute("list"));
 
-            using (FileStream fs = new FileStream("Account/" + filename + ".xml", FileMode.Create))
+            using (FileStream fs = new FileStream(ACCOUNTS + filename + ".xml", FileMode.Create))
             {
                 ser.Serialize(fs, listDc);
             }

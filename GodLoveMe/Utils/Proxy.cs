@@ -10,15 +10,16 @@ namespace GodLoveMe.Utils
 {
     public class Proxy
     {
+        private const string Path = @"C:\my_work_files\pinterest\proxy.txt";
 
         public static void Checker()
         {
            
             int tested = 0;
 
-            string[] dirty = File.ReadAllLines(@"C:\my_work_files\pinterest\proxy.txt");
-            File.Delete(@"Data/Clear.txt");
-            Parallel.ForEach(dirty, new ParallelOptions() { MaxDegreeOfParallelism = 75 }, (row) =>
+            string[] dirty = File.ReadAllLines(Path);
+            File.Delete(Path);
+            Parallel.ForEach(dirty, new ParallelOptions() { MaxDegreeOfParallelism = 95 }, (row) =>
              {
 
                  WebClient wc = new WebClient();
@@ -27,8 +28,7 @@ namespace GodLoveMe.Utils
                  try
                  {
                      string f = wc.DownloadString(new Uri("https://google.com/"));
-                     File.AppendAllText(@"Data/Clear.txt", row+Environment.NewLine);
-                     Console.WriteLine("ok " + tested.ToString() + " / "+ dirty.Count() );
+                     File.AppendAllText(Path, row+Environment.NewLine);
                     
                  }
                  catch {}
@@ -37,7 +37,7 @@ namespace GodLoveMe.Utils
                
              });
 
-            Console.WriteLine("proxy done");
+             
 
         }
 

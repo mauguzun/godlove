@@ -19,7 +19,7 @@ namespace GodLoveMe.Start
 
 
 
-            string[] paths = Directory.GetFiles("Account");
+            string[] paths = Directory.GetFiles(AddMeFast.CookieManager.ACCOUNTS);
             List<Account> acounts = Account.GetAccounts();
 
             Console.WriteLine("start " + paths.Count());
@@ -45,7 +45,7 @@ namespace GodLoveMe.Start
                         }
                         else
                         {
-                            drivers.InitDriver(false, par[1].Replace("_", ":"));
+                            drivers.InitDriver(true, par[1].Replace("_", ":"));
 
                         }
 
@@ -92,7 +92,7 @@ namespace GodLoveMe.Start
                             DeleteBadAccount(path);
                         }
                     }
-                    catch { }
+                    catch (Exception ex) { Console.WriteLine(ex.Message); }
                     finally
                     {
                         drivers.SuperQuit();

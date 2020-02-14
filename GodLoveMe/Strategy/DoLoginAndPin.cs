@@ -11,8 +11,9 @@ namespace GodLoveMe.Strategy
 {
     class DoLoginAndPin : AllStart
     {
-        string usedProxy;
-        int usedCount;
+        Dictionary<string , int> proxyAttemps =  new  Dictionary<string ,int>();
+   
+
         public override void Print()
         {
             Console.WriteLine("I should Pin");
@@ -22,35 +23,34 @@ namespace GodLoveMe.Strategy
         {
 
 
-
+            this.ThreadCount = 9;
 
             string[] paths = Directory.GetFiles("Account");
             List<Account> acounts = Account.GetAccounts();
-             acounts.Reverse();
+            acounts.Reverse();
             Console.WriteLine("start " + paths.Count());
 
-
+            Pinterest.Pinterest pin = null;
             Parallel.ForEach(acounts, new ParallelOptions() { MaxDegreeOfParallelism = this.ThreadCount }, (acc) =>
             {
                 Console.WriteLine("try " + acc.Email);
                 var proxy = new GetProxy.ProxyReader();
-                string current = proxy.GetList()[0];
+                string current = proxy.GetList().OrderBy(x => Guid.NewGuid()).FirstOrDefault();
 
                 try
                 {
                     Console.WriteLine(current);
                     drivers.InitDriver(false, current);
-                    Pinterest.Pinterest pin = new Pinterest.Pinterest(drivers.Driver);
+                    pin = new Pinterest.Pinterest(drivers.Driver);
 
 
                     pin.Email = acc.Email;
                     pin.UserName = acc.UserName;
                     pin.UserName = acc.UserName;
                     pin.MakeLogin(acc.Email, acc.Password);
-
+                    Console.WriteLine("start login check ");
                     if (pin.CheckLogin())
                     {
-                        pin.SaveCookie(CookieManager.Filename(acc.Email, current));
                         if (pin.ValidName() == false)
                         {
                             pin.FillName();
@@ -65,6 +65,8 @@ namespace GodLoveMe.Strategy
                             else
                             {
                                 this.allreadyTried[pin.Email] = 1;
+                                pin.SaveCookie(CookieManager.Filename(acc.Email, current));
+
                             }
 
                             if (this.allreadyTried[pin.Email] > this.Attemps)
@@ -75,43 +77,57 @@ namespace GodLoveMe.Strategy
 
                             //  pin.Follow();
                             pin.MakePost();
-                            if (current == usedProxy)
+                            if (proxyAttemps.Keys.Contains(current))
                             {
-                                this.usedCount++;
+                                if(proxyAttemps[current] > 10)
+                                {
+                                    RemoveOneProxy(current);
+                                }
+                                proxyAttemps[current] += 1;
+                            }
+                            else
+                            {
+                                proxyAttemps[current] = 1;
                             }
 
-                            usedProxy = current;
-                            if (this.usedCount > 4)
-                            {
-                                RemoveOneProxy(current);
-                                this.usedCount = 0;
-                            }
+                          
+                            
                         }
                     }
                     else
+                    {
+                        if (pin.Driver.FindElementsById("__PWS_ROOT__").Count() != 0 )
                         {
-                            if (pin.Driver.FindElementById("__PWS_ROOT__") == null)
-                            {
-                                RemoveOneProxy(current);
-                            }
-
-                            drivers.SuperQuit();
+                            RemoveOneProxy(current);
                         }
+
+                        drivers.SuperQuit();
                     }
-                catch { }
+                }
+                catch (Exception ex)
+                {
+                   
+                        RemoveOneProxy(current);
+                  
+                    drivers.SuperQuit();
+                }
                 finally
                 {
                     drivers.SuperQuit();
 
-                } 
+                }
             });
         }
 
-        private static void RemoveOneProxy( string current)
+        private static void RemoveOneProxy(string current)
         {
             var list = new ProxyReader().GetList();
-            list.Remove(current);
-            File.WriteAllLines(@"C:\my_work_files\pinterest\proxy.txt", list);
+            if(list != null)
+            { 
+                list.Remove(current);
+                File.WriteAllLines(@"C:\my_work_files\pinterest\proxy.txt", list);
+            }
+          
         }
 
         private void DeleteBadAccount(string path)

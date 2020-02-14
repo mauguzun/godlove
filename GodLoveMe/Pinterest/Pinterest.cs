@@ -23,7 +23,7 @@ namespace GodLoveMe.Pinterest
         public string UserName { get; set; } = null;
         public CookieManager CookieManager { get; set; } = new CookieManager();
         public RemoteWebDriver Driver { get; set; }
-
+        public string Error { get; private set; }
 
         public Pinterest(RemoteWebDriver driver)
         {
@@ -35,15 +35,16 @@ namespace GodLoveMe.Pinterest
         public void MakeLoginWithCookie(List<DCookie> dCookie)
         {
            
-            try
-            {
-                Driver.Url = "https://pinterest.com/";
-                foreach (var cookie in dCookie)
+           
+                Driver.Url = "https://"+ dCookie[0].Domain;
+            Driver.Manage().Cookies.DeleteAllCookies(); //Delete all of them
+            foreach (var cookie in dCookie)
                 {
                     Driver.Manage().Cookies.AddCookie(cookie.GetCookie());
                 }
-            }
-            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            
+
+            Driver.Url = "https://" + dCookie[0].Domain;
 
 
         }
@@ -88,7 +89,14 @@ namespace GodLoveMe.Pinterest
                 if (Driver.FindElementsByCssSelector("#password-error").Count != 0)
                 {
                     Driver.FindElementByCssSelector("#password-error button").Click();
-                    Console.WriteLine("password reset");
+                    this.Error = "password reset";
+                    return false;
+                }
+                else if (Driver.FindElementsByCssSelector("[aria-label='Reset password']").Count != 0)
+                {
+                    Driver.FindElementByCssSelector("[aria-label='Reset password']").Click();
+                    this.Error = "password reset";
+                    return false;
                 }
                 Driver.Url = "https://pinterest.com";
                 Driver.Url = "https://pinterest.com";
@@ -108,8 +116,8 @@ namespace GodLoveMe.Pinterest
         }
         public void SaveCookie(string filename)
         {
-            var cookies = this.Driver.Manage().Cookies.AllCookies;
-            this.CookieManager.Save(filename, cookies);
+          
+            this.CookieManager.Save(filename, Driver.Manage().Cookies.AllCookies);
 
         }
 
@@ -158,7 +166,7 @@ namespace GodLoveMe.Pinterest
             return true;
         }
 
-        public void Follow()
+        public bool Follow()
         {
             Driver.Url = "https://www.pinterest.com/search/boards/?q=" + RandomValue.GetString(@"Data/city_names.txt") + "&rs=filter";
 
@@ -186,6 +194,7 @@ namespace GodLoveMe.Pinterest
 
 
             }
+            return true;
         }
 
         public bool ValidName()
@@ -207,6 +216,44 @@ namespace GodLoveMe.Pinterest
 
 
         }
+
+        public Account AccountInfo(Account acc)
+        {
+            try
+            {
+                if(acc.UserName== null )
+                {
+                    Driver.Url = "https://www.pinterest.com/settings#profile";
+                    acc.UserName = Driver.FindElementById("username").GetAttribute("value");
+                    acc.FullName = Driver.FindElementById("first_name").GetAttribute("value") + " " +
+                        "" + Driver.FindElementById("last_name").GetAttribute("value");
+                    return acc;
+                }
+                else
+                {
+                    Driver.Url = "https://pinterest.com/" + acc.UserName;
+                }
+                
+                var asadd = Driver.FindElementByCssSelector("#initial-state");
+                string json = Driver.FindElementByCssSelector("#initial-state").GetAttribute("innerHTML");
+                JObject o = JObject.Parse(json); ;
+
+                acc.FullName = o["resourceResponses"][0]["response"]["data"]["user"]["full_name"].ToString();
+                acc.Follow = Int32.Parse(o["resourceResponses"][0]["response"]["data"]["user"]["following_count"].ToString());
+                acc.Followers = Int32.Parse(o["resourceResponses"][0]["response"]["data"]["user"]["follower_count"].ToString());
+                
+                acc.UserName = o["resourceResponses"][0]["response"]["data"]["user"]["full_name"].ToString();
+                acc.Boards = o["resourceResponses"][0]["response"]["data"]["user"]["board_count"].ToString();
+          
+               
+                return acc;
+            }
+            catch {
+                acc.Status = "deleted";
+            }
+            return acc;
+        }
+
 
         public void FillName()
         {

@@ -1,0 +1,56 @@
+[0207/210349.461:ERROR:file_io_win.cc(161)] CreateFile C:\Users\mauguzun\AppData\Local\Temp\scoped_dir83552_771542295\Crashpad\settings.dat: The system cannot find the path specified. (0x3)
+[0207/210349.463:ERROR:file_io_win.cc(170)] CreateFile C:\Users\mauguzun\AppData\Local\Temp\scoped_dir83552_771542295\Crashpad\reports\3f37cd7c-0459-473e-a9d6-1462ed597713.dmp: The system cannot find the path specified. (0x3)
+[0207/210349.464:ERROR:crash_report_exception_handler.cc(97)] PrepareNewCrashReport failed
+[0208/001224.260:ERROR:file_io_win.cc(161)] CreateFile C:\Users\mauguzun\AppData\Local\Temp\scoped_dir126144_2135850570\Crashpad\settings.dat: The system cannot find the path specified. (0x3)
+[0208/001224.261:ERROR:file_io_win.cc(170)] CreateFile C:\Users\mauguzun\AppData\Local\Temp\scoped_dir126144_2135850570\Crashpad\reports\1a5a81f1-9e88-4b42-9de6-a5db573b2aca.dmp: The system cannot find the path specified. (0x3)
+[0208/001224.261:ERROR:crash_report_exception_handler.cc(97)] PrepareNewCrashReport failed
+[0208/143407.534:ERROR:file_io_win.cc(161)] CreateFile C:\Users\mauguzun\AppData\Local\Temp\scoped_dir144528_1189662626\Crashpad\settings.dat: The system cannot find the path specified. (0x3)
+[0208/143407.536:ERROR:file_io_win.cc(170)] CreateFile C:\Users\mauguzun\AppData\Local\Temp\scoped_dir144528_1189662626\Crashpad\reports\1479dfe2-d1c6-42d7-9e49-e595c523cc0a.dmp: The system cannot find the path specified. (0x3)
+[0208/143407.536:ERROR:crash_report_exception_handler.cc(97)] PrepareNewCrashReport failed
+[0208/154938.258:ERROR:process_info.cc(359)] UncheckedAllocate
+[0208/154938.304:ERROR:process_info.cc(359)] UncheckedAllocate
+[0208/154938.418:ERROR:process_info.cc(359)] UncheckedAllocate
+[0208/154938.430:ERROR:process_info.cc(359)] UncheckedAllocate
+[0208/154938.805:ERROR:file_io_win.cc(161)] CreateFile C:\Users\mauguzun\AppData\Local\Temp\scoped_dir169192_494765853\Crashpad\settings.dat: The system cannot find the file specified. (0x2)
+[0208/165312.990:ERROR:registration_protocol_win.cc(84)] TransactNamedPipe: The pipe has been ended. (0x6D)
+[0208/195122.401:ERROR:process_info.cc(359)] UncheckedAllocate
+[0208/195122.530:ERROR:process_info.cc(359)] UncheckedAllocate
+[0208/195122.597:ERROR:process_info.cc(359)] UncheckedAllocate
+[0208/195505.487:ERROR:process_info.cc(359)] UncheckedAllocate
+[0208/195508.819:ERROR:process_info.cc(359)] UncheckedAllocate
+[0208/195513.794:ERROR:filesystem_win.cc(148)] DeleteFile C:\Users\mauguzun\AppData\Local\Temp\scoped_dir136392_926580318\Crashpad\reports\09d5b74e-9635-4553-b81f-2e16315d29af.dmp: The process cannot access the file because it is being used by another process. (0x20)
+[0208/195523.696:ERROR:process_info.cc(359)] UncheckedAllocate
+[0208/213842.695:ERROR:process_info.cc(359)] UncheckedAllocate
+[0208/213843.659:ERROR:process_info.cc(359)] UncheckedAllocate
+[0208/224652.329:ERROR:process_info.cc(359)] UncheckedAllocate
+[0209/123049.593:ERROR:file_io_win.cc(161)] CreateFile C:\Users\mauguzun\AppData\Local\Temp\scoped_dir106252_60560169\Crashpad\settings.dat: The system cannot find the file specified. (0x2)
+[0209/123130.999:ERROR:filesystem_win.cc(148)] DeleteFile C:\Users\mauguzun\AppData\Local\Temp\scoped_dir108436_1050319810\Crashpad\reports\ef032e87-0fd9-4c51-916d-ca96b44f2ad8.dmp: The process cannot access the file because it is being used by another process. (0x20)
+[0209/123138.441:ERROR:process_info.cc(359)] UncheckedAllocate
+[0209/123138.441:ERROR:process_info.cc(359)] UncheckedAllocate
+[0209/123932.568:ERROR:process_info.cc(359)] UncheckedAllocate
+[0209/161547.735:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+[0209/161547.735:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+[0209/161547.752:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+[0209/161547.759:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+[0209/161547.809:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+[0209/161547.856:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+[0209/163526.854:ERROR:crashpad_client_win.cc(505)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)
+[0209/192306.948:ERROR:process_reader_win.cc(151)] SuspendThread: Access is denied. (0x5)
+[0209/192306.948:ERROR:exception_snapshot_win.cc(98)] thread ID 36604 not found in process
+[0209/192306.949:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: An attempt was made to access an exiting process. (0xc000010a)
+[0209/214031.207:ERROR:process_reader_win.cc(151)] SuspendThread: Access is denied. (0x5)
+[0209/214031.208:ERROR:process_reader_win.cc(151)] SuspendThread: Access is denied. (0x5)
+[0209/214031.208:ERROR:process_reader_win.cc(151)] SuspendThread: Access is denied. (0x5)
+[0209/214031.208:ERROR:process_reader_win.cc(151)] SuspendThread: Access is denied. (0x5)
+[0209/214031.208:ERROR:process_reader_win.cc(151)] SuspendThread: Access is denied. (0x5)
+[0209/214031.208:ERROR:process_reader_win.cc(151)] SuspendThread: Access is denied. (0x5)
+[0209/214031.208:ERROR:process_reader_win.cc(151)] SuspendThread: Access is denied. (0x5)
+[0209/214031.208:ERROR:process_reader_win.cc(151)] SuspendThread: Access is denied. (0x5)
+[0209/214031.208:ERROR:process_reader_win.cc(151)] SuspendThread: Access is denied. (0x5)
+[0209/214031.208:ERROR:process_reader_win.cc(151)] SuspendThread: Access is denied. (0x5)
+[0209/214031.208:ERROR:process_reader_win.cc(151)] SuspendThread: Access is denied. (0x5)
+[0209/214031.208:ERROR:process_reader_win.cc(151)] SuspendThread: Access is denied. (0x5)
+[0209/214031.208:ERROR:exception_snapshot_win.cc(98)] thread ID 8388 not found in process
+[0211/222853.306:ERROR:process_info.cc(359)] UncheckedAllocate
+[0211/222853.309:ERROR:process_info.cc(359)] UncheckedAllocate
+[0211/222853.328:ERROR:process_info.cc(359)] UncheckedAllocate
