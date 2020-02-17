@@ -42,9 +42,9 @@ namespace GUI
                     Email = splited[0],
                     Password = splited[1],
                     UserName = splited[2],
-                    Proxie = splited[3],
-                    Followers = String.IsNullOrEmpty(splited[4]) ? 0 : int.Parse(splited[4]),
-                    Follow = String.IsNullOrEmpty(splited[5]) ? 0 : int.Parse(splited[5]),
+                    FullName = splited[3],
+                    Followers = String.IsNullOrEmpty(splited[5]) ? 0 : int.Parse(splited[5]),
+                    Follow = String.IsNullOrEmpty(splited[6]) ? 0 : int.Parse(splited[6]),
                     Boards = splited[6]
                 };
                 if (splited.Count() > 6)

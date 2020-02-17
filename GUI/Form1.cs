@@ -230,7 +230,7 @@ namespace GUI
             Status status = new Status();
             status.Accounts = new SortableBindingList<Account>(SelectAccount());
             status.Show();
-            status.AccuntCheck();
+            status.ACcountCheck();
         }
 
         private void addAccountToolStripMenuItem1_Click_1(object sender, EventArgs e)

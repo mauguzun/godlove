@@ -164,7 +164,7 @@ namespace GUI
             this.dataGridView1.Visible = true;
         }
 
-        public void AccuntCheck()
+        public void ACcountCheck()
         {
             Setup();
 
@@ -175,7 +175,7 @@ namespace GUI
 
                 Parallel.ForEach(Accounts, new ParallelOptions() { MaxDegreeOfParallelism = 7 }, (acc) =>
                 {
-
+                    AppendTextBox("account start proxy " + acc.Email);
                     try
                     {
                         drivers.InitDriver(false);

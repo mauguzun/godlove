@@ -41,7 +41,7 @@ namespace GodLoveMe
 
         public override string ToString()
         {
-            return this.Email + ':' + this.Password + ':' + this.UserName + ":" + this.Proxie + ":" + this.Followers + ":" + this.Follow + ":" + this.Boards + ":" + this.Group + ":" + this.Status;
+            return this.Email + ':' + this.Password + ':' + this.UserName + ":" + this.FullName + ":" + this.Proxie + ":" + this.Followers + ":" + this.Follow + ":" + this.Boards + ":" + this.Group + ":" + this.Status;
         }
 
         public static List<Account> GetAccountExtraInfo()
