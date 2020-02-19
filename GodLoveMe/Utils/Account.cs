@@ -57,11 +57,16 @@ namespace GodLoveMe
                     Email = splited[0],
                     Password = splited[1],
                     UserName = splited[2],
-                    Proxie = splited[3],
-                    Followers = String.IsNullOrEmpty(splited[4]) ? 0 : int.Parse(splited[4]),
-                    Follow = String.IsNullOrEmpty(splited[5]) ? 0 : int.Parse(splited[5]),
-                    Boards = splited[6]
+                    
+                   
                 };
+                if (splited.Count() > 3)
+                {
+                    acc.Proxie = splited[3];
+                    acc.Followers = String.IsNullOrEmpty(splited[4]) ? 0 : int.Parse(splited[4]);
+                    acc.Follow = String.IsNullOrEmpty(splited[5]) ? 0 : int.Parse(splited[5]);
+                    acc.Boards = splited[6];
+                }
                 if (splited.Count() > 6)
                 {
                     acc.Group = splited[7];

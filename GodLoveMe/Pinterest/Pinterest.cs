@@ -242,7 +242,7 @@ namespace GodLoveMe.Pinterest
                 acc.Follow = Int32.Parse(o["resourceResponses"][0]["response"]["data"]["user"]["following_count"].ToString());
                 acc.Followers = Int32.Parse(o["resourceResponses"][0]["response"]["data"]["user"]["follower_count"].ToString());
                 
-                acc.UserName = o["resourceResponses"][0]["response"]["data"]["user"]["full_name"].ToString();
+               // acc.UserName = o["resourceResponses"][0]["response"]["data"]["user"]["user_name"].ToString();
                 acc.Boards = o["resourceResponses"][0]["response"]["data"]["user"]["board_count"].ToString();
           
                

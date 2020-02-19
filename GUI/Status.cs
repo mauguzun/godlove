@@ -1,6 +1,7 @@
 ﻿using AddMeFast;
 using GodLoveMe;
 using GodLoveMe.Pinterest;
+using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,6 +22,8 @@ namespace GUI
         Thread main;
         public SortableBindingList<Account> Accounts { get; set; }
         public PinAction PinAction { get; set; } = PinAction.Pin;
+
+        
         public Status()
         {
             InitializeComponent();
@@ -33,14 +36,14 @@ namespace GUI
         public void PinStart()
         {
             Setup();
-            DriverInstance drivers = new DriverInstance();
+          
             AppendTextBox("start ");
             Thread t = new Thread(() =>
             {
 
                 Parallel.ForEach(Accounts, new ParallelOptions() { MaxDegreeOfParallelism = 7 }, (acc) =>
                 {
-
+                    DriverInstance drivers = new DriverInstance();
                     try
                     {
                         AppendTextBox(acc.Email + " try login");
@@ -77,11 +80,11 @@ namespace GUI
                                 pin.FillName();
                             }
 
-                            
+
                             var response = true;
                             while (pin.MakePost())
                             {
-                               switch(this.PinAction)
+                                switch (this.PinAction)
                                 {
                                     case PinAction.Follow:
                                         response = pin.Follow();
@@ -93,7 +96,7 @@ namespace GUI
 
                                 }
                                 AppendTextBox(this.PinAction + acc.Email);
-                                acc.Status =  this.PinAction  + DateTime.Now.ToString();
+                                acc.Status = this.PinAction + DateTime.Now.ToString();
                             }
                             //in.Follow();
                             // MakePin(acc, pin);
@@ -123,7 +126,7 @@ namespace GUI
             t.Start();
         }
 
- 
+
 
         public void DeleteProxie(string proxie)
         {
@@ -164,38 +167,53 @@ namespace GUI
             this.dataGridView1.Visible = true;
         }
 
-        public void ACcountCheck()
+
+
+        public void AccountCheck()
         {
             Setup();
 
-            DriverInstance drivers = new DriverInstance();
+            
             AppendTextBox("start ");
-            Thread t = new Thread(() =>
-            {
 
-                Parallel.ForEach(Accounts, new ParallelOptions() { MaxDegreeOfParallelism = 7 }, (acc) =>
+
+
+            //Thread t = new Thread(() =>
+            //{
+            Task.Factory.StartNew(() =>
+            {
+                Parallel.ForEach(Accounts, new ParallelOptions() { MaxDegreeOfParallelism = 12 }, (acc) =>
                 {
+                    DriverInstance drivers = new DriverInstance();
                     AppendTextBox("account start proxy " + acc.Email);
                     try
                     {
                         drivers.InitDriver(false);
                         Pinterest pin = new Pinterest(drivers.Driver);
                         acc = pin.AccountInfo(acc);
+                       
+                        drivers.SuperQuit();
                     }
 
                     catch (Exception ex)
                     {
                         acc.Status = "account not exist";
                         AccountManager.GetInstance().Save();
+                        drivers.SuperQuit();
                     }
                     finally
                     {
                         drivers.SuperQuit();
+                     
+
 
                     }
                 });
+
             });
-            t.Start();
+            //});
+            //t.Start(); 
+            AppendTextBox("done ");
         }
 
 

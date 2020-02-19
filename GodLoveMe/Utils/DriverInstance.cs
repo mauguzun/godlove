@@ -11,11 +11,11 @@ using System.Xml.Serialization;
 
 namespace AddMeFast
 {
-  public  class DriverInstance
+    public class DriverInstance
     {
         public RemoteWebDriver Driver { get; set; }
         public string Account { get; set; }
-        public void InitDriver(bool visible = false,string proxy = null )
+        public void InitDriver(bool visible = false, string proxy = null)
         {
             var driverService = ChromeDriverService.CreateDefaultService();
             driverService.HideCommandPromptWindow = true;
@@ -27,16 +27,18 @@ namespace AddMeFast
             if (proxy != null)
                 options.AddArgument($"--proxy-server={proxy}");  //
 
-            options.AddArgument("no-sandbox");
 
-
-            options.AddArgument("disable-infobars"); // disabling infobars
+          
+            options.AddArgument("--disable-infobars"); // disabling infobars
             options.AddArgument("--disable-extensions"); // disabling extensions
             options.AddArgument("--disable-gpu"); // applicable to windows os only
             options.AddArgument("--disable-dev-shm-usage"); // overcome limited resource problems
             options.AddArgument("--no-sandbox"); // Bypass OS security model
 
+
             Driver = new ChromeDriver(driverService, options);
+
+
 
         }
         public void Save()
@@ -70,12 +72,13 @@ namespace AddMeFast
         {
             try
             {
+                this.Driver.Close();
                 this.Driver.Quit();
                 this.Driver.Dispose();
             }
-            catch ( Exception ex)
+            catch (Exception ex)
             {
-                Console.WriteLine(" on quit " + ex.Message );
+                Console.WriteLine(" on quit " + ex.Message);
             }
         }
 

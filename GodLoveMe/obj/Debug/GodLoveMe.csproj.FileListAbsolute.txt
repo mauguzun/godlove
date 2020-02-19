@@ -25,4 +25,3 @@ C:\GodLoveMe\GodLoveMe\bin\Debug\WebDriver.xml
 C:\GodLoveMe\GodLoveMe\obj\Debug\GodLoveMe.csproj.CopyComplete
 C:\GodLoveMe\GodLoveMe\obj\Debug\GodLoveMe.exe
 C:\GodLoveMe\GodLoveMe\obj\Debug\GodLoveMe.pdb
-C:\GodLoveMe\GodLoveMe\obj\Debug\GodLoveMe.csprojAssemblyReference.cache

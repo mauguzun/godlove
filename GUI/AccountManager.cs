@@ -25,7 +25,7 @@ namespace GUI
                 instance = new AccountManager();
                 SetAccountExtraInfo();
             }
-               
+
             return instance;
         }
 
@@ -42,19 +42,26 @@ namespace GUI
                     Email = splited[0],
                     Password = splited[1],
                     UserName = splited[2],
-                    FullName = splited[3],
-                    Followers = String.IsNullOrEmpty(splited[5]) ? 0 : int.Parse(splited[5]),
-                    Follow = String.IsNullOrEmpty(splited[6]) ? 0 : int.Parse(splited[6]),
-                    Boards = splited[6]
+
                 };
-                if (splited.Count() > 6)
+                if (splited.Count() > 3)
                 {
-                    acc.Group = splited[7];
+                    acc.FullName = splited[3];
+
+
+                    acc.Proxie = splited[4];
+                    acc.Followers = String.IsNullOrEmpty(splited[5]) ? 0 : int.Parse(splited[5]);
+                    acc.Follow = String.IsNullOrEmpty(splited[6]) ? 0 : int.Parse(splited[6]);
+                    acc.Boards = splited[7];
+                  }
+                if (splited.Count() > 7)
+                {
+                    acc.Group = splited[8];
                 }
-                if (splited.Count() > 7 )
+                if (splited.Count() > 8)
                 {
                     var x = splited.Count();
-                    acc.Status = splited[8];
+                    acc.Status = splited[9];
                 }
                 if (cookiesAccount.Any(x => x.Email == acc.Email))
                 {
@@ -68,7 +75,7 @@ namespace GUI
             Accounts = new SortableBindingList<Account>(accounts);
 
         }
-        public  void Save()
+        public void Save()
         {
             File.Delete(PATH);
             foreach (Account account in Accounts)
@@ -84,7 +91,7 @@ namespace GUI
             foreach (var cookiesFile in cookiesFiles)
             {
                 string[] para = Path.GetFileNameWithoutExtension(cookiesFile).Split(new string[] { "_p_" }, StringSplitOptions.RemoveEmptyEntries);
-                if(para.Count() > 1)
+                if (para.Count() > 1)
                 {
                     acc.Add(new Account()
                     {
@@ -93,7 +100,7 @@ namespace GUI
                         Cookie = cookiesFile,
                     });
                 }
-              
+
             }
 
 

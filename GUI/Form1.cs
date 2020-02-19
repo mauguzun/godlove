@@ -35,6 +35,7 @@ namespace GUI
             InitializeComponent();
 
             this.dataGridView1.DataSource = AccountManager.Accounts;
+            this.label1.Text = AccountManager.Accounts.Count.ToString();
             this.dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.AutoResizeColumns();
@@ -230,7 +231,7 @@ namespace GUI
             Status status = new Status();
             status.Accounts = new SortableBindingList<Account>(SelectAccount());
             status.Show();
-            status.ACcountCheck();
+            status.AccountCheck();
         }
 
         private void addAccountToolStripMenuItem1_Click_1(object sender, EventArgs e)
@@ -302,6 +303,12 @@ namespace GUI
         {
             AccountManager.Accounts.Select(c => { c.Status = ""; return c; }).ToList();
             AccountManager.GetInstance().Save();
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AccountManager.GetInstance().Save();
+            MessageBox.Show("saved");
         }
     }
 
