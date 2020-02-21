@@ -32,17 +32,17 @@ namespace GodLoveMe.Pinterest
 
         }
 
-        public void MakeLoginWithCookie(List<DCookie> dCookie)
+        public void MakeLogin(List<DCookie> dCookie)
         {
-           
-           
-                Driver.Url = "https://"+ dCookie[0].Domain;
+
+
+            Driver.Url = "https://" + dCookie[0].Domain;
             Driver.Manage().Cookies.DeleteAllCookies(); //Delete all of them
             foreach (var cookie in dCookie)
-                {
-                    Driver.Manage().Cookies.AddCookie(cookie.GetCookie());
-                }
-            
+            {
+                Driver.Manage().Cookies.AddCookie(cookie.GetCookie());
+            }
+
 
             Driver.Url = "https://" + dCookie[0].Domain;
 
@@ -107,16 +107,41 @@ namespace GodLoveMe.Pinterest
                 }
                 return false;
             }
-            catch  { return false; }
+            catch { return false; }
 
 
 
-           
-            
+
+
         }
+
+        public bool Repin()
+        {
+            var images = Driver.FindElementsByCssSelector("[data-test-id='pinrep-image']");
+            if (images.Count() > 0)
+            {
+                foreach(var image in images)
+                {
+                    image.Click();
+                    var likeButton = Driver.FindElementsByCssSelector("[data-test-id='SaveButton']");
+                    if (likeButton.Count() > 0 )
+                    {
+                        likeButton[0].Click();
+
+                        var boards = Driver.FindElementsByCssSelector("div[data-test-id='boardWithoutSection']");
+                        if(boards.Count() > 0 )
+                        {
+                            boards[0].Click();
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
         public void SaveCookie(string filename)
         {
-          
+
             this.CookieManager.Save(filename, Driver.Manage().Cookies.AllCookies);
 
         }
@@ -164,6 +189,25 @@ namespace GodLoveMe.Pinterest
 
             }
             return true;
+        }
+
+        public bool Follow(string nickname)
+        {
+            Driver.Url = "https://www.pinterest.com/" + nickname;
+            var buttons = Driver.FindElementsByCssSelector("div");
+            if(buttons.Count() > 0)
+            {
+                foreach(var button in buttons)
+                {
+                    if(button.Text.Trim().ToLower() == "follow")
+                    {
+                        button.Click();
+                        return true;
+                    }
+                }
+            }
+
+            return false ;
         }
 
         public bool Follow()
@@ -221,7 +265,7 @@ namespace GodLoveMe.Pinterest
         {
             try
             {
-                if(acc.UserName== null )
+                if (acc.UserName == null)
                 {
                     Driver.Url = "https://www.pinterest.com/settings#profile";
                     acc.UserName = Driver.FindElementById("username").GetAttribute("value");
@@ -233,7 +277,7 @@ namespace GodLoveMe.Pinterest
                 {
                     Driver.Url = "https://pinterest.com/" + acc.UserName;
                 }
-                
+
                 var asadd = Driver.FindElementByCssSelector("#initial-state");
                 string json = Driver.FindElementByCssSelector("#initial-state").GetAttribute("innerHTML");
                 JObject o = JObject.Parse(json); ;
@@ -241,14 +285,15 @@ namespace GodLoveMe.Pinterest
                 acc.FullName = o["resourceResponses"][0]["response"]["data"]["user"]["full_name"].ToString();
                 acc.Follow = Int32.Parse(o["resourceResponses"][0]["response"]["data"]["user"]["following_count"].ToString());
                 acc.Followers = Int32.Parse(o["resourceResponses"][0]["response"]["data"]["user"]["follower_count"].ToString());
-                
-               // acc.UserName = o["resourceResponses"][0]["response"]["data"]["user"]["user_name"].ToString();
+
+                // acc.UserName = o["resourceResponses"][0]["response"]["data"]["user"]["user_name"].ToString();
                 acc.Boards = o["resourceResponses"][0]["response"]["data"]["user"]["board_count"].ToString();
-          
-               
+
+
                 return acc;
             }
-            catch {
+            catch
+            {
                 acc.Status = "deleted";
             }
             return acc;
@@ -270,8 +315,8 @@ namespace GodLoveMe.Pinterest
                     Driver.FindElementById("last_name").SendKeys(Keys.Backspace);
                 }
 
-                Driver.FindElementById("first_name").SendKeys(RandomValue.GetString("Data/names.txt"));
-                Driver.FindElementById("last_name").SendKeys(RandomValue.GetString("Data/names.txt"));
+                Driver.FindElementById("first_name").SendKeys(  RandomValue.GetString("Data/names.txt").ToLower()   );
+                Driver.FindElementById("last_name").SendKeys(  RandomValue.GetString("Data/names.txt").ToLower());
                 Driver.FindElementById("first_name").SendKeys(Keys.Space);
 
 
@@ -287,10 +332,12 @@ namespace GodLoveMe.Pinterest
                         actions.Perform();
                         button.Click();
                         Thread.Sleep(new TimeSpan(0, 0, 5));
-                        Console.WriteLine("new name done");
-                        return;
+                        break;
+                      
                     }
                 }
+                AddImage();
+                return;
             }
 
             catch (Exception ex)
@@ -326,8 +373,9 @@ namespace GodLoveMe.Pinterest
                 }
                 return false;
             }
-            catch
+            catch(Exception ex)
             {
+                var d = ex.Message;
                 return false;
             }
 

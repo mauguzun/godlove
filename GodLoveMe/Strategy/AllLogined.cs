@@ -56,7 +56,7 @@ namespace GodLoveMe.Start
                         pin.Email = Path.GetFileNameWithoutExtension(par[0]);
                         pin.AccountPath = path;
                         pin.UserName = acounts.Where(x => x.Email == par[0]).FirstOrDefault().UserName;
-                        pin.MakeLoginWithCookie(manager.Load(path));
+                        pin.MakeLogin(manager.Load(path));
 
                         if (pin.CheckLogin())
                         {

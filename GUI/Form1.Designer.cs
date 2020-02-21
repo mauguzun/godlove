@@ -30,23 +30,31 @@
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FolloMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.followToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.followWhere0ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PinMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rePinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.groupNameTxt = new System.Windows.Forms.ToolStripTextBox();
             this.setGroupBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.proxyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.proxyAssignToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.prooxyCheckerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.UpdateMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearProxyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tryAddAccFromListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkAccountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addAccountToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.resetStatusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.updatePasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.label1 = new System.Windows.Forms.Label();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.labelCount = new System.Windows.Forms.Label();
+            this.labelStatus = new System.Windows.Forms.Label();
+            this.textBoxQuery = new System.Windows.Forms.TextBox();
+            this.comboBoxColumn = new System.Windows.Forms.ComboBox();
+            this.renameAccountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -58,9 +66,9 @@
             this.openToolStripMenuItem,
             this.FolloMenu,
             this.PinMenuItem,
+            this.rePinToolStripMenuItem,
             this.toolStripMenuItem1,
             this.proxyToolStripMenuItem,
-            this.UpdateMenu,
             this.tryAddAccFromListToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -76,12 +84,36 @@
             this.openToolStripMenuItem.Size = new System.Drawing.Size(49, 26);
             this.openToolStripMenuItem.Text = "Edit";
             // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(123, 26);
+            this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
             // FolloMenu
             // 
+            this.FolloMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.followToolStripMenuItem,
+            this.followWhere0ToolStripMenuItem});
             this.FolloMenu.Name = "FolloMenu";
-            this.FolloMenu.Size = new System.Drawing.Size(67, 26);
+            this.FolloMenu.Size = new System.Drawing.Size(67, 24);
             this.FolloMenu.Text = "Follow";
-            this.FolloMenu.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
+            this.FolloMenu.Click += new System.EventHandler(this.FolloMenu_Click);
+            // 
+            // followToolStripMenuItem
+            // 
+            this.followToolStripMenuItem.Name = "followToolStripMenuItem";
+            this.followToolStripMenuItem.Size = new System.Drawing.Size(195, 26);
+            this.followToolStripMenuItem.Text = "Follow";
+            this.followToolStripMenuItem.Click += new System.EventHandler(this.followToolStripMenuItem_Click);
+            // 
+            // followWhere0ToolStripMenuItem
+            // 
+            this.followWhere0ToolStripMenuItem.Name = "followWhere0ToolStripMenuItem";
+            this.followWhere0ToolStripMenuItem.Size = new System.Drawing.Size(195, 26);
+            this.followWhere0ToolStripMenuItem.Text = "Follow Where 0";
+            this.followWhere0ToolStripMenuItem.Click += new System.EventHandler(this.followWhere0ToolStripMenuItem_Click);
             // 
             // PinMenuItem
             // 
@@ -89,6 +121,13 @@
             this.PinMenuItem.Size = new System.Drawing.Size(43, 26);
             this.PinMenuItem.Text = "Pin";
             this.PinMenuItem.Click += new System.EventHandler(this.PinMenuItem_Click);
+            // 
+            // rePinToolStripMenuItem
+            // 
+            this.rePinToolStripMenuItem.Name = "rePinToolStripMenuItem";
+            this.rePinToolStripMenuItem.Size = new System.Drawing.Size(64, 26);
+            this.rePinToolStripMenuItem.Text = "Re Pin";
+            this.rePinToolStripMenuItem.Click += new System.EventHandler(this.rePinToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -117,7 +156,8 @@
             // 
             this.proxyToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.proxyAssignToolStripMenuItem,
-            this.prooxyCheckerToolStripMenuItem});
+            this.prooxyCheckerToolStripMenuItem,
+            this.clearProxyToolStripMenuItem});
             this.proxyToolStripMenuItem.Name = "proxyToolStripMenuItem";
             this.proxyToolStripMenuItem.Size = new System.Drawing.Size(59, 26);
             this.proxyToolStripMenuItem.Text = "Proxy";
@@ -136,43 +176,52 @@
             this.prooxyCheckerToolStripMenuItem.Text = "Prooxy Checker";
             this.prooxyCheckerToolStripMenuItem.Click += new System.EventHandler(this.prooxyCheckerToolStripMenuItem_Click);
             // 
-            // UpdateMenu
+            // clearProxyToolStripMenuItem
             // 
-            this.UpdateMenu.Name = "UpdateMenu";
-            this.UpdateMenu.Size = new System.Drawing.Size(112, 26);
-            this.UpdateMenu.Text = "Uppdate Pass";
-            this.UpdateMenu.Click += new System.EventHandler(this.UpdateMenu_Click);
+            this.clearProxyToolStripMenuItem.Name = "clearProxyToolStripMenuItem";
+            this.clearProxyToolStripMenuItem.Size = new System.Drawing.Size(193, 26);
+            this.clearProxyToolStripMenuItem.Text = "Clear Proxy";
+            this.clearProxyToolStripMenuItem.Click += new System.EventHandler(this.clearProxyToolStripMenuItem_Click);
             // 
             // tryAddAccFromListToolStripMenuItem
             // 
             this.tryAddAccFromListToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.checkAccountToolStripMenuItem,
             this.addAccountToolStripMenuItem1,
-            this.resetStatusToolStripMenuItem});
+            this.resetStatusToolStripMenuItem,
+            this.updatePasswordToolStripMenuItem,
+            this.renameAccountToolStripMenuItem});
             this.tryAddAccFromListToolStripMenuItem.Name = "tryAddAccFromListToolStripMenuItem";
-            this.tryAddAccFromListToolStripMenuItem.Size = new System.Drawing.Size(81, 26);
+            this.tryAddAccFromListToolStripMenuItem.Size = new System.Drawing.Size(81, 24);
             this.tryAddAccFromListToolStripMenuItem.Text = " Account";
             // 
             // checkAccountToolStripMenuItem
             // 
             this.checkAccountToolStripMenuItem.Name = "checkAccountToolStripMenuItem";
-            this.checkAccountToolStripMenuItem.Size = new System.Drawing.Size(189, 26);
+            this.checkAccountToolStripMenuItem.Size = new System.Drawing.Size(206, 26);
             this.checkAccountToolStripMenuItem.Text = "Check Account";
             this.checkAccountToolStripMenuItem.Click += new System.EventHandler(this.checkAccountToolStripMenuItem_Click);
             // 
             // addAccountToolStripMenuItem1
             // 
             this.addAccountToolStripMenuItem1.Name = "addAccountToolStripMenuItem1";
-            this.addAccountToolStripMenuItem1.Size = new System.Drawing.Size(189, 26);
+            this.addAccountToolStripMenuItem1.Size = new System.Drawing.Size(206, 26);
             this.addAccountToolStripMenuItem1.Text = "Add account";
             this.addAccountToolStripMenuItem1.Click += new System.EventHandler(this.addAccountToolStripMenuItem1_Click_1);
             // 
             // resetStatusToolStripMenuItem
             // 
             this.resetStatusToolStripMenuItem.Name = "resetStatusToolStripMenuItem";
-            this.resetStatusToolStripMenuItem.Size = new System.Drawing.Size(189, 26);
+            this.resetStatusToolStripMenuItem.Size = new System.Drawing.Size(206, 26);
             this.resetStatusToolStripMenuItem.Text = "Reset Status";
             this.resetStatusToolStripMenuItem.Click += new System.EventHandler(this.resetStatusToolStripMenuItem_Click);
+            // 
+            // updatePasswordToolStripMenuItem
+            // 
+            this.updatePasswordToolStripMenuItem.Name = "updatePasswordToolStripMenuItem";
+            this.updatePasswordToolStripMenuItem.Size = new System.Drawing.Size(206, 26);
+            this.updatePasswordToolStripMenuItem.Text = "Update Password";
+            this.updatePasswordToolStripMenuItem.Click += new System.EventHandler(this.updatePasswordToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
@@ -196,30 +245,67 @@
             this.dataGridView1.TabIndex = 3;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
-            // label1
+            // labelCount
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label1.Location = new System.Drawing.Point(12, 536);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(46, 17);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "label1";
+            this.labelCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelCount.AutoSize = true;
+            this.labelCount.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.labelCount.Location = new System.Drawing.Point(12, 536);
+            this.labelCount.Name = "labelCount";
+            this.labelCount.Size = new System.Drawing.Size(46, 17);
+            this.labelCount.TabIndex = 4;
+            this.labelCount.Text = "label1";
             // 
-            // saveToolStripMenuItem
+            // labelStatus
             // 
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.saveToolStripMenuItem.Text = "Save";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            this.labelStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelStatus.AutoSize = true;
+            this.labelStatus.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.labelStatus.Location = new System.Drawing.Point(64, 537);
+            this.labelStatus.Name = "labelStatus";
+            this.labelStatus.Size = new System.Drawing.Size(46, 17);
+            this.labelStatus.TabIndex = 5;
+            this.labelStatus.Text = "label1";
+            // 
+            // textBoxQuery
+            // 
+            this.textBoxQuery.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxQuery.Location = new System.Drawing.Point(879, 533);
+            this.textBoxQuery.Name = "textBoxQuery";
+            this.textBoxQuery.Size = new System.Drawing.Size(188, 22);
+            this.textBoxQuery.TabIndex = 6;
+            this.textBoxQuery.TextChanged += new System.EventHandler(this.textBoxQuery_TextChanged);
+            // 
+            // comboBoxColumn
+            // 
+            this.comboBoxColumn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxColumn.FormattingEnabled = true;
+            this.comboBoxColumn.Items.AddRange(new object[] {
+            "UserName ",
+            "Email ",
+            "FullName"});
+            this.comboBoxColumn.Location = new System.Drawing.Point(752, 533);
+            this.comboBoxColumn.Name = "comboBoxColumn";
+            this.comboBoxColumn.Size = new System.Drawing.Size(121, 24);
+            this.comboBoxColumn.TabIndex = 7;
+            // 
+            // renameAccountToolStripMenuItem
+            // 
+            this.renameAccountToolStripMenuItem.Name = "renameAccountToolStripMenuItem";
+            this.renameAccountToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.renameAccountToolStripMenuItem.Text = "Rename Account";
+            this.renameAccountToolStripMenuItem.Click += new System.EventHandler(this.renameAccountToolStripMenuItem_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1067, 554);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.comboBoxColumn);
+            this.Controls.Add(this.textBoxQuery);
+            this.Controls.Add(this.labelStatus);
+            this.Controls.Add(this.labelCount);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -227,8 +313,6 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "Form1";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -248,15 +332,23 @@
         private System.Windows.Forms.ToolStripTextBox groupNameTxt;
         private System.Windows.Forms.ToolStripMenuItem setGroupBtn;
         private System.Windows.Forms.ToolStripMenuItem proxyToolStripMenuItem;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelCount;
         private System.Windows.Forms.ToolStripMenuItem proxyAssignToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem prooxyCheckerToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem UpdateMenu;
         private System.Windows.Forms.ToolStripMenuItem tryAddAccFromListToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem checkAccountToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addAccountToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem resetStatusToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clearProxyToolStripMenuItem;
+        private System.Windows.Forms.Label labelStatus;
+        private System.Windows.Forms.ToolStripMenuItem rePinToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem followToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem followWhere0ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem updatePasswordToolStripMenuItem;
+        private System.Windows.Forms.TextBox textBoxQuery;
+        private System.Windows.Forms.ComboBox comboBoxColumn;
+        private System.Windows.Forms.ToolStripMenuItem renameAccountToolStripMenuItem;
     }
 }
 

@@ -18,17 +18,41 @@ namespace GUI
 {
     public partial class Status : Form
     {
+        private bool show = false;
+        static  string FOLLOWED = @"C:\Users\mauguzun\Desktop\stat.txt";
         public static List<string> proxieList = File.ReadAllLines(@"C:\my_work_files\pinterest\proxy.txt").ToList();
-        Thread main;
         public SortableBindingList<Account> Accounts { get; set; }
-        public PinAction PinAction { get; set; } = PinAction.Pin;
+        private PinAction pinAction = PinAction.Pin;
+        public static List<string> AlreadyFollowedMyAccount = new List<string>();
 
-        
+      
+        int startedDriver = 0;
+        int stopedDriver = 0;
+        public PinAction PinAction
+        {
+            get
+            {
+                return pinAction;
+            }
+            set
+            {
+
+                pinAction = value;
+                this.Text = pinAction.ToString();
+                this.Refresh();
+            }
+
+        }
+
+
         public Status()
         {
             InitializeComponent();
-
-
+            
+            if(File.Exists(FOLLOWED))
+            {
+                AlreadyFollowedMyAccount = File.ReadAllLines(FOLLOWED).ToList();
+            }
         }
 
 
@@ -36,7 +60,7 @@ namespace GUI
         public void PinStart()
         {
             Setup();
-          
+
             AppendTextBox("start ");
             Thread t = new Thread(() =>
             {
@@ -44,45 +68,34 @@ namespace GUI
                 Parallel.ForEach(Accounts, new ParallelOptions() { MaxDegreeOfParallelism = 7 }, (acc) =>
                 {
                     DriverInstance drivers = new DriverInstance();
+                    this.startedDriver++;
                     try
                     {
                         AppendTextBox(acc.Email + " try login");
                         if (string.IsNullOrEmpty(acc.Proxie))
                         {
-                            drivers.InitDriver(false);
+                            drivers.InitDriver(show);
                         }
                         else
                         {
-                            drivers.InitDriver(false, acc.Proxie.Replace("_", ":"));
+                            drivers.InitDriver(show, acc.Proxie.Replace("_", ":"));
 
                         }
 
                         Pinterest pin = new Pinterest(drivers.Driver);
 
-                        //if (acc.Cookie == null)
-                        //{
+                      
                         pin.MakeLogin(acc.Email, acc.Password);
-
-                        //}
-                        //else
-                        //{
-                        //    pin.MakeLoginWithCookie(manager.Load(acc.Cookie));
-
-                        //}
                         if (pin.CheckLogin())
                         {
                             pin.SaveCookie(CookieManager.Filename(acc.Email, acc.Proxie.Replace('_', ':')));
-
-
                             if (pin.ValidName() == false)
                             {
 
                                 pin.FillName();
                             }
-
-
                             var response = true;
-                            while (pin.MakePost())
+                            while (true)
                             {
                                 switch (this.PinAction)
                                 {
@@ -90,24 +103,66 @@ namespace GUI
                                         response = pin.Follow();
                                         break;
 
+
+                                    case PinAction.Repin:
+                                        response = pin.Repin();
+                                        break;
+
+
+                                    case PinAction.FollowSelf:
+                                        var newbies  = AccountManager.Accounts.Where(x => x.Followers == 0);
+                                        foreach (var item in newbies)
+                                        {
+                                            response = pin.Follow(item.UserName);
+                                            if(response == false)
+                                            {
+                                                drivers.SuperQuit();
+                                            }
+                                            else
+                                            {
+                                                AlreadyFollowedMyAccount.Add(item.UserName);
+                                                File.AppendAllLines(FOLLOWED, AlreadyFollowedMyAccount);
+                                            }
+                                           AppendTextBox(this.PinAction  + " - " + item.UserName);
+                                        }
+                                       
+                                        break;
+
                                     default:
                                         response = pin.MakePost();
                                         break;
 
                                 }
-                                AppendTextBox(this.PinAction + acc.Email);
+                                if (this.pinAction == PinAction.Follow)
+                                {
+                                    int? before = acc.Follow;
+                                    DriverInstance temp = new DriverInstance();
+                                    temp.InitDriver(false);
+                                    acc = CheckOneAccount(acc, temp);
+                                    temp.SuperQuit();
+
+                                    if (before == acc.Follow)
+                                    {
+                                        AppendTextBox("not work " + this.PinAction + acc.Email);
+                                        drivers.SuperQuit();
+                                        this.stopedDriver++;
+                                        break;
+                                    }
+                                }
+                                AppendTextBox(this.PinAction  + " - " + acc.Proxie   + " - " + acc.Email);
                                 acc.Status = this.PinAction + DateTime.Now.ToString();
+
                             }
-                            //in.Follow();
-                            // MakePin(acc, pin);
+                     
 
                         }
                         else
                         {
                             AppendTextBox(pin.Error + ":" + acc.Email);
                             drivers.SuperQuit();
+                            this.stopedDriver++;
                         }
-
+                        this.SetInfo();
                     }
 
                     catch (Exception ex)
@@ -172,56 +227,61 @@ namespace GUI
         public void AccountCheck()
         {
             Setup();
+            AppendTextBox("start check account");
+
+
 
             
-            AppendTextBox("start ");
-
-
-
-            //Thread t = new Thread(() =>
-            //{
             Task.Factory.StartNew(() =>
             {
                 Parallel.ForEach(Accounts, new ParallelOptions() { MaxDegreeOfParallelism = 12 }, (acc) =>
                 {
-                    DriverInstance drivers = new DriverInstance();
-                    AppendTextBox("account start proxy " + acc.Email);
-                    try
-                    {
-                        drivers.InitDriver(false);
-                        Pinterest pin = new Pinterest(drivers.Driver);
-                        acc = pin.AccountInfo(acc);
-                       
-                        drivers.SuperQuit();
-                    }
-
-                    catch (Exception ex)
-                    {
-                        acc.Status = "account not exist";
-                        AccountManager.GetInstance().Save();
-                        drivers.SuperQuit();
-                    }
-                    finally
-                    {
-                        drivers.SuperQuit();
-                     
-
-
-                    }
+                    this.startedDriver++;
+                    DriverInstance drivers = new DriverInstance ();
+                    drivers.InitDriver(false);
+                    acc = CheckOneAccount(acc,drivers);
+                    drivers.SuperQuit();
+                    this.stopedDriver++;
+                    AppendTextBox(acc.Email + " checked ");
                 });
 
             });
-            //});
-            //t.Start(); 
+         
             AppendTextBox("done ");
         }
 
+        private Account CheckOneAccount(Account acc, DriverInstance drivers)
+        {
+            
+            AppendTextBox("account start proxy " + acc.Email);
+            try
+            {
+                Pinterest pin = new Pinterest(drivers.Driver);
+                acc = pin.AccountInfo(acc);     
+            }
+
+            catch (Exception ex)
+            {
+                acc.Status = "account not exist";
+                AccountManager.GetInstance().Save();
+            }
+           
+
+            return acc;
+        }
 
         public void LoadFromString()
         {
 
         }
-
+        private void SetInfo()
+        {
+            labelInfo.Invoke((MethodInvoker)delegate
+            {
+                // Running on the UI thread
+                labelInfo.Text = Accounts.Count + "/" + this.startedDriver + "/" + this.stopedDriver;
+            });
+        }
 
         private void Setup()
         {

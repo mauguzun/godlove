@@ -10,7 +10,7 @@ namespace GodLoveMe.Utils
  
         public class ImgRep
         {
-            public string DirectoryPath { get; private set; } = @"C:\Users\mauguzun\Desktop\fir sha";
+            public string DirectoryPath { get; private set; } = @"C:\Users\mauguzun\Desktop\Camera - Copy\";
 
             private List<String> _db;
 

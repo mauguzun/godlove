@@ -28,6 +28,7 @@ namespace GUI
         Thread pinPosterThread;
         Thread proxyThread;
         Thread updatePasswordThread;
+        private List<Account> filteredAccounts;
 
         public Form1()
         {
@@ -35,23 +36,14 @@ namespace GUI
             InitializeComponent();
 
             this.dataGridView1.DataSource = AccountManager.Accounts;
-            this.label1.Text = AccountManager.Accounts.Count.ToString();
+            this.labelCount.Text = AccountManager.Accounts.Count.ToString();
             this.dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.AutoResizeColumns();
+            this.dataGridView1.ReadOnly = true;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            AccountManager.GetInstance().Save();
-            MessageBox.Show("saved");
-        }
 
 
         private void setGroupBtn_Click(object sender, EventArgs e)
@@ -88,17 +80,7 @@ namespace GUI
             status.PinStart();
 
         }
-        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-
-            Status status = new Status();
-            status.Accounts = new SortableBindingList<Account>(SelectAccount());
-            status.PinAction = PinAction.Follow;
-            status.Show();
-            status.PinStart();
-
-        }
+      
         private List<Account> SelectAccount()
         {
             List<Account> doJob = new List<Account>();
@@ -119,10 +101,13 @@ namespace GUI
 
         private void SetInfo(string text)
         {
-            label1.Invoke((MethodInvoker)delegate
+            labelCount.Invoke((MethodInvoker)delegate
             {
-                // Running on the UI thread
-                label1.Text = text;
+                labelCount.Text = AccountManager.Accounts.Count.ToString();
+            });
+            labelStatus.Invoke((MethodInvoker)delegate
+            {
+                labelStatus.Text = text;
             });
         }
 
@@ -158,40 +143,6 @@ namespace GUI
 
         private void UpdateMenu_Click(object sender, EventArgs e)
         {
-
-            if (updatePasswordThread != null)
-            {
-                this.updatePasswordThread.Abort();
-
-            }
-            this.updatePasswordThread = new Thread(() =>
-            {
-                this.SetInfo("start update");
-                string[] good = File.ReadAllLines(@"C:\my_work_files\pinterest\res\good.txt");
-                List<Account> goodAcc = new List<Account>();
-                foreach (string line in good)
-                {
-                    string[] lineArr = line.Split(':');
-                    goodAcc.Add(new Account() { Email = lineArr[0].ToLower(), Password = lineArr[1] });
-                }
-
-
-
-                for (int i = 0; i < AccountManager.Accounts.Count(); i++)
-                {
-                    var query = from g in goodAcc
-                                where g.Email == AccountManager.Accounts[i].Email
-                                select g.Password;
-                    if (query.Count() > 0 && AccountManager.Accounts[i].Password != query.LastOrDefault())
-                    {
-                        AccountManager.Accounts[i].Password = query.LastOrDefault();
-                        AccountManager.Accounts[i].Status = "password upadted";
-                    }
-
-                }
-                this.SetInfo("stop update ");
-            });
-            this.updatePasswordThread.Start();
 
         }
 
@@ -238,7 +189,7 @@ namespace GUI
         {
             Thread t = new Thread(() =>
             {
-                DriverInstance drivers = new DriverInstance();
+
                 List<Account> newAccount = new List<Account>();
                 string[] lines = File.ReadAllLines(@"C:\my_work_files\pinterest\res\good.txt");
                 foreach (string line in lines)
@@ -263,34 +214,49 @@ namespace GUI
                 {
                     already = File.ReadAllLines(ALREADY).ToList();
                 }
+
+                newAccount = newAccount.Where(p => !already.Any(p2 => p2 == p.Email)).ToList();
+                newAccount = newAccount.Where(p => !AccountManager.Accounts.Any(p2 => p2.Email == p.Email)).ToList();
+
+
+                SetInfo("Account count for test " + newAccount.Count() );
                 newAccount.Reverse();
+                Parallel.ForEach(newAccount, new ParallelOptions() { MaxDegreeOfParallelism = 7 }, (acc) =>
+                   {
+                       DriverInstance drivers = new DriverInstance();
+                       SetInfo("Start checking" + acc.Email);
+                       if (already.Contains(acc.Email) || AccountManager.Accounts.Where(x => x.Email == acc.Email).Any())
+                       {
+                           SetInfo("skip");
+                       }
+                       else
+                       {
+                           drivers.InitDriver(false);
+                           Pinterest pin = new Pinterest(drivers.Driver);
+                           pin.MakeLogin(acc.Email, acc.Password);
+                           if (pin.CheckLogin())
+                           {
+                              //      SetInfo("finded checking" + acc.Email);
+                              var newAcc = pin.AccountInfo(acc);
+                               AccountManager.Accounts.Add(newAcc);
+                               AccountManager.GetInstance().Save();
+
+                           }
+                           else if (pin.Error != "password reset")
+                           {
+                               try { File.AppendAllText(ALREADY, acc.Email + Environment.NewLine); }
+                               catch { }
+
+                           }
+
+
+
+                       }
+                       drivers.SuperQuit();
+                   });
                 foreach (Account acc in newAccount)
                 {
-                    SetInfo("Start checking" + acc.Email);
-                    if (already.Contains(acc.Email) || AccountManager.Accounts.Where(x => x.Email == acc.Email).Any())
-                    {
-                        SetInfo("skip");
-                    }
-                    else
-                    {
-                        drivers.InitDriver(false);
-                        Pinterest pin = new Pinterest(drivers.Driver);
-                        pin.MakeLogin(acc.Email, acc.Password);
-                        if (pin.CheckLogin())
-                        {
-                            SetInfo("finded checking" + acc.Email);
-                            var newAcc = pin.AccountInfo(acc);
-                            AccountManager.Accounts.Add(newAcc);
-                            AccountManager.GetInstance().Save();
-                        }
-                        else if (pin.Error != "password reset")
-                        {
-                            File.AppendAllText(ALREADY, acc.Email + Environment.NewLine);
-                        }
 
-
-                        drivers.SuperQuit();
-                    }
                 }
 
 
@@ -307,8 +273,138 @@ namespace GUI
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
+            if(!String.IsNullOrEmpty(textBoxQuery.Text.Trim()))
+            {
+                SetInfo("Update filtered account");
+                foreach(var acc in this.filteredAccounts)
+                {
+                    AccountManager.Accounts.Where(x => x.Email == acc.Email).FirstOrDefault().Follow = acc.Follow;
+                    AccountManager.Accounts.Where(x => x.Email == acc.Email).FirstOrDefault().Followers = acc.Followers;
+                    AccountManager.Accounts.Where(x => x.Email == acc.Email).FirstOrDefault().FullName = acc.FullName;
+                }
+            }
             AccountManager.GetInstance().Save();
             MessageBox.Show("saved");
+        }
+
+        private void clearProxyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+
+            SelectAccount().Select(c => { c.Proxie = ""; return c; }).ToList();
+            AccountManager.GetInstance().Save();
+        }
+
+        private void rePinToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Status status = new Status();
+            status.Accounts = new SortableBindingList<Account>(SelectAccount());
+            status.Show();
+            status.PinAction = PinAction.Repin;
+            status.PinStart();
+        }
+
+        private void followToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Status status = new Status();
+            status.Accounts = new SortableBindingList<Account>(SelectAccount());
+            status.PinAction = PinAction.Follow;
+            status.Show();
+            status.PinStart();
+        }
+
+        private void followWhere0ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Status status = new Status();
+            status.Accounts = new SortableBindingList<Account>(SelectAccount());
+            status.PinAction = PinAction.FollowSelf;
+            status.Show();
+            status.PinStart();
+        }
+
+        private void updatePasswordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            if (updatePasswordThread != null)
+            {
+                this.updatePasswordThread.Abort();
+
+            }
+            this.updatePasswordThread = new Thread(() =>
+            {
+                this.SetInfo("start update");
+                string[] good = File.ReadAllLines(@"C:\my_work_files\pinterest\res\good.txt");
+                List<Account> goodAcc = new List<Account>();
+                foreach (string line in good)
+                {
+                    string[] lineArr = line.Split(':');
+                    goodAcc.Add(new Account() { Email = lineArr[0].ToLower(), Password = lineArr[1] });
+                }
+
+
+
+                for (int i = 0; i < AccountManager.Accounts.Count(); i++)
+                {
+                    var query = from g in goodAcc
+                                where g.Email == AccountManager.Accounts[i].Email
+                                select g.Password;
+                    if (query.Count() > 0 && AccountManager.Accounts[i].Password != query.LastOrDefault())
+                    {
+                        AccountManager.Accounts[i].Password = query.LastOrDefault();
+                        AccountManager.Accounts[i].Status = "password upadted";
+                    }
+
+                }
+                this.SetInfo("stop update ");
+            });
+            this.updatePasswordThread.Start();
+
+        }
+
+        private void textBoxQuery_TextChanged(object sender, EventArgs e)
+        {
+
+            if (  String.IsNullOrEmpty(textBoxQuery.Text.Trim()) ){
+                dataGridView1.DataSource = AccountManager.Accounts;
+            }
+            else
+            {
+                var x =  comboBoxColumn.SelectedItem == null  ? "FullName" :  comboBoxColumn.SelectedItem.ToString();
+                this.filteredAccounts = AccountManager.Accounts.Where(a => a.GetType().GetProperty(x).GetValue(a).ToString().Contains(textBoxQuery.Text.Trim())).ToList();
+                dataGridView1.DataSource = this.filteredAccounts;
+            }
+        }
+
+        private void renameAccountToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Thread t = new Thread(() =>
+            {
+
+                Parallel.ForEach(SelectAccount(), new ParallelOptions() { MaxDegreeOfParallelism = 3 }, (acc) => {
+
+                    acc.Proxie = null;
+                    DriverInstance instance = new DriverInstance();
+                    instance.InitDriver(false);
+                    var pin = new Pinterest(instance.Driver);
+
+                    pin.MakeLogin(acc.Email, acc.Password) ;
+                    if(pin.CheckLogin())
+                    {
+                        pin.FillName();
+                        var accountNewName = pin.AccountInfo(acc);
+                        AccountManager.Accounts.Where(x => x.Email == acc.Email).FirstOrDefault().FullName = accountNewName.FullName;
+                        AccountManager.GetInstance().Save();
+                    }
+                });
+            });
+            t.Start();
+          
+        }
+
+        private void FolloMenu_Click(object sender, EventArgs e)
+        {
+
         }
     }
 

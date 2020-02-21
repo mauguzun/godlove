@@ -36,7 +36,7 @@ namespace GodLoveMe.Strategy
                      drivers.InitDriver(false);
                      Console.WriteLine(path);
                      Pinterest.Pinterest pin = new Pinterest.Pinterest(drivers.Driver);
-                     pin.MakeLoginWithCookie(manager.Load(path));
+                     pin.MakeLogin(manager.Load(path));
                      if (pin.CheckLogin())
                      {
                          if (pin.ValidName() == false)

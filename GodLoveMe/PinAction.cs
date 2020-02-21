@@ -4,6 +4,7 @@
     {
         Pin,
         Follow,
-        Repin
+        Repin,
+        FollowSelf
     }
 }

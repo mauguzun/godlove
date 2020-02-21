@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace GUI
@@ -75,14 +76,27 @@ namespace GUI
             Accounts = new SortableBindingList<Account>(accounts);
 
         }
+        private static ReaderWriterLockSlim lock_ = new ReaderWriterLockSlim();
         public void Save()
         {
-            File.Delete(PATH);
-            foreach (Account account in Accounts)
+            lock_.EnterWriteLock();
+            try
             {
-                File.AppendAllText(PATH, account.ToString() + Environment.NewLine);
+                File.Delete(PATH);
 
+                foreach (Account account in Accounts)
+                {
+                    File.AppendAllText(PATH, account.ToString() + Environment.NewLine);
+
+                }
             }
+            finally
+            {
+                lock_.ExitWriteLock();
+            }
+
+
+           
         }
         public static List<Account> AccountsPaths()
         {
