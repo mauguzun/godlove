@@ -380,21 +380,35 @@ namespace GUI
         {
             Thread t = new Thread(() =>
             {
-
+                this.SetInfo("start rename ");
                 Parallel.ForEach(SelectAccount(), new ParallelOptions() { MaxDegreeOfParallelism = 3 }, (acc) => {
 
                     acc.Proxie = null;
                     DriverInstance instance = new DriverInstance();
-                    instance.InitDriver(false);
+                    this.SetInfo("start rename " + acc.UserName);
+                    if (string.IsNullOrEmpty(acc.Proxie))
+                    {
+                        instance.InitDriver(false);
+                    }
+                    else
+                    {
+                        instance.InitDriver(false, acc.Proxie.Replace("_", ":"));
+
+                    }
                     var pin = new Pinterest(instance.Driver);
 
                     pin.MakeLogin(acc.Email, acc.Password) ;
                     if(pin.CheckLogin())
                     {
+                        this.SetInfo("cant logined  " + acc.UserName);
                         pin.FillName();
                         var accountNewName = pin.AccountInfo(acc);
                         AccountManager.Accounts.Where(x => x.Email == acc.Email).FirstOrDefault().FullName = accountNewName.FullName;
                         AccountManager.GetInstance().Save();
+                    }
+                    else
+                    {
+                        this.SetInfo("cant login  " + acc.UserName);
                     }
                 });
             });

@@ -109,3 +109,6 @@
 [0220/004048.503:ERROR:crash_report_database_win.cc(580)] CreateDirectory C:\Users\mauguzun\AppData\Local\Temp\scoped_dir25112_1614529095\Crashpad: There is not enough space on the disk. (0x70)
 [0220/103656.012:ERROR:crashpad_client_win.cc(505)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)
 [0220/103713.229:ERROR:crashpad_client_win.cc(505)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)
+[0221/115350.872:ERROR:crashpad_client_win.cc(505)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)
+[0221/115351.052:ERROR:process_info.cc(359)] UncheckedAllocate
+[0221/123033.974:ERROR:process_info.cc(359)] UncheckedAllocate
