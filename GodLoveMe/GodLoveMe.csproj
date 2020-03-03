@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="PinAction.cs" />
     <Compile Include="Pinterest\RandomValue.cs" />
+    <Compile Include="Pinterest\SuperInfo.cs" />
     <Compile Include="Strategy\AppendUsers.cs" />
     <Compile Include="Strategy\AppnedFfromFileLoginPassword.cs" />
     <Compile Include="Strategy\DoLogin.cs" />

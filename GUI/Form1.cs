@@ -29,6 +29,7 @@ namespace GUI
         Thread proxyThread;
         Thread updatePasswordThread;
         private List<Account> filteredAccounts;
+        public static bool show = false;
 
         public Form1()
         {
@@ -75,12 +76,13 @@ namespace GUI
         {
 
             Status status = new Status();
+            Status.show = show;
             status.Accounts = new SortableBindingList<Account>(SelectAccount());
             status.Show();
             status.PinStart();
 
         }
-      
+
         private List<Account> SelectAccount()
         {
             List<Account> doJob = new List<Account>();
@@ -150,7 +152,7 @@ namespace GUI
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 1)
+            if (e.RowIndex < 0)
                 return;
 
             if (e.ColumnIndex == 1)
@@ -181,7 +183,7 @@ namespace GUI
         {
             Status status = new Status();
             status.Accounts = new SortableBindingList<Account>(SelectAccount());
-            status.Show();
+            status.Show(); Status.show = show;
             status.AccountCheck();
         }
 
@@ -219,7 +221,7 @@ namespace GUI
                 newAccount = newAccount.Where(p => !AccountManager.Accounts.Any(p2 => p2.Email == p.Email)).ToList();
 
 
-                SetInfo("Account count for test " + newAccount.Count() );
+                SetInfo("Account count for test " + newAccount.Count());
                 newAccount.Reverse();
                 Parallel.ForEach(newAccount, new ParallelOptions() { MaxDegreeOfParallelism = 7 }, (acc) =>
                    {
@@ -236,8 +238,8 @@ namespace GUI
                            pin.MakeLogin(acc.Email, acc.Password);
                            if (pin.CheckLogin())
                            {
-                              //      SetInfo("finded checking" + acc.Email);
-                              var newAcc = pin.AccountInfo(acc);
+                               //      SetInfo("finded checking" + acc.Email);
+                               var newAcc = pin.AccountInfo(acc);
                                AccountManager.Accounts.Add(newAcc);
                                AccountManager.GetInstance().Save();
 
@@ -274,10 +276,10 @@ namespace GUI
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
-            if(!String.IsNullOrEmpty(textBoxQuery.Text.Trim()))
+            if (!String.IsNullOrEmpty(textBoxQuery.Text.Trim()))
             {
                 SetInfo("Update filtered account");
-                foreach(var acc in this.filteredAccounts)
+                foreach (var acc in this.filteredAccounts)
                 {
                     AccountManager.Accounts.Where(x => x.Email == acc.Email).FirstOrDefault().Follow = acc.Follow;
                     AccountManager.Accounts.Where(x => x.Email == acc.Email).FirstOrDefault().Followers = acc.Followers;
@@ -301,6 +303,7 @@ namespace GUI
             Status status = new Status();
             status.Accounts = new SortableBindingList<Account>(SelectAccount());
             status.Show();
+            Status.show = show;
             status.PinAction = PinAction.Repin;
             status.PinStart();
         }
@@ -310,7 +313,7 @@ namespace GUI
             Status status = new Status();
             status.Accounts = new SortableBindingList<Account>(SelectAccount());
             status.PinAction = PinAction.Follow;
-            status.Show();
+            status.Show(); Status.show = show;
             status.PinStart();
         }
 
@@ -320,6 +323,7 @@ namespace GUI
             status.Accounts = new SortableBindingList<Account>(SelectAccount());
             status.PinAction = PinAction.FollowSelf;
             status.Show();
+            Status.show = show;
             status.PinStart();
         }
 
@@ -365,13 +369,15 @@ namespace GUI
         private void textBoxQuery_TextChanged(object sender, EventArgs e)
         {
 
-            if (  String.IsNullOrEmpty(textBoxQuery.Text.Trim()) ){
+            if (String.IsNullOrEmpty(textBoxQuery.Text.Trim()))
+            {
                 dataGridView1.DataSource = AccountManager.Accounts;
             }
             else
             {
-                var x =  comboBoxColumn.SelectedItem == null  ? "FullName" :  comboBoxColumn.SelectedItem.ToString();
-                this.filteredAccounts = AccountManager.Accounts.Where(a => a.GetType().GetProperty(x).GetValue(a).ToString().Contains(textBoxQuery.Text.Trim())).ToList();
+                var x = comboBoxColumn.SelectedItem == null ? "UserName" : comboBoxColumn.SelectedItem.ToString();
+                x = x.Trim();
+                this.filteredAccounts = AccountManager.Accounts.ToList().Where(a => a.GetType().GetProperty(x).GetValue(a).ToString().Contains(textBoxQuery.Text.Trim())).ToList();
                 dataGridView1.DataSource = this.filteredAccounts;
             }
         }
@@ -381,7 +387,8 @@ namespace GUI
             Thread t = new Thread(() =>
             {
                 this.SetInfo("start rename ");
-                Parallel.ForEach(SelectAccount(), new ParallelOptions() { MaxDegreeOfParallelism = 3 }, (acc) => {
+                Parallel.ForEach(SelectAccount(), new ParallelOptions() { MaxDegreeOfParallelism = 3 }, (acc) =>
+                {
 
                     acc.Proxie = null;
                     DriverInstance instance = new DriverInstance();
@@ -397,8 +404,8 @@ namespace GUI
                     }
                     var pin = new Pinterest(instance.Driver);
 
-                    pin.MakeLogin(acc.Email, acc.Password) ;
-                    if(pin.CheckLogin())
+                    pin.MakeLogin(acc.Email, acc.Password);
+                    if (pin.CheckLogin())
                     {
                         this.SetInfo("cant logined  " + acc.UserName);
                         pin.FillName();
@@ -413,12 +420,85 @@ namespace GUI
                 });
             });
             t.Start();
-          
+
         }
 
         private void FolloMenu_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void addXmlToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var fbd = new FolderBrowserDialog())
+            {
+                DialogResult result = fbd.ShowDialog();
+
+                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                {
+                    string[] files = Directory.GetFiles(fbd.SelectedPath);
+
+                    foreach (var path in files)
+
+
+                    {
+                        if (path.Contains(".xml"))
+                        {
+                            DriverInstance drivers = new DriverInstance();
+                            drivers.InitDriver(false);
+                            Console.WriteLine(path);
+                            Pinterest pin = new Pinterest(drivers.Driver);
+                            pin.MakeLogin(manager.Load(path));
+                            if (!pin.CheckLogin())
+                            {
+                                pin.MakeLogin(Path.GetFileNameWithoutExtension(path), "trance_333");
+                            }
+
+                            if (pin.CheckLogin())
+                            {
+                                if (pin.ValidName() == false)
+                                {
+                                    pin.FillName();
+
+                                }
+                                try { pin.AddImage(); }
+                                catch { }
+
+
+                                Account acc = new Account();
+                                acc.Email = Path.GetFileNameWithoutExtension(path);
+                                acc.Password = "trance_333";
+                                acc = pin.AccountInfo(acc);
+                                AccountManager.Accounts.Add(acc);
+                                try
+                                {
+                                    AccountManager.GetInstance().Save();
+                                }
+                                catch
+                                { }
+
+
+                            }
+                            drivers.SuperQuit();
+                        }
+                        File.Delete(path);
+
+                    };
+                }
+            }
+        }
+
+        private void optionsToolStripMenuItem_CheckStateChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void visbleBox_TextChanged(object sender, EventArgs e)
+        {
+           if (visbleBox.SelectedItem.ToString() == "On")
+            {
+                show = true;
+            }
         }
     }
 

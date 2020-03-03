@@ -5,12 +5,9 @@ C:\GodLoveMe\GUI\bin\Debug\GUI.exe.config
 C:\GodLoveMe\GUI\bin\Debug\GUI.exe
 C:\GodLoveMe\GUI\bin\Debug\GUI.pdb
 C:\GodLoveMe\GUI\bin\Debug\GetProxy.dll
-C:\GodLoveMe\GUI\bin\Debug\GodLoveMe.exe
 C:\GodLoveMe\GUI\bin\Debug\HtmlAgilityPack.dll
 C:\GodLoveMe\GUI\bin\Debug\WebDriver.dll
 C:\GodLoveMe\GUI\bin\Debug\Newtonsoft.Json.dll
-C:\GodLoveMe\GUI\bin\Debug\GodLoveMe.pdb
-C:\GodLoveMe\GUI\bin\Debug\GodLoveMe.exe.config
 C:\GodLoveMe\GUI\bin\Debug\HtmlAgilityPack.pdb
 C:\GodLoveMe\GUI\bin\Debug\HtmlAgilityPack.xml
 C:\GodLoveMe\GUI\bin\Debug\WebDriver.xml

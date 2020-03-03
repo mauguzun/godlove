@@ -18,16 +18,17 @@ namespace GUI
 {
     public partial class Status : Form
     {
-        private bool show = false;
+        public static bool show = false;
         static  string FOLLOWED = @"C:\Users\mauguzun\Desktop\stat.txt";
         public static List<string> proxieList = File.ReadAllLines(@"C:\my_work_files\pinterest\proxy.txt").ToList();
         public SortableBindingList<Account> Accounts { get; set; }
         private PinAction pinAction = PinAction.Pin;
         public static List<string> AlreadyFollowedMyAccount = new List<string>();
-
+        Dictionary<string, int> attemp = new Dictionary<string, int>();
       
         int startedDriver = 0;
         int stopedDriver = 0;
+        int succeAcction = 0;
         public PinAction PinAction
         {
             get
@@ -86,6 +87,7 @@ namespace GUI
 
                       
                         pin.MakeLogin(acc.Email, acc.Password);
+                        pin.UserName = acc.UserName;
                         if (pin.CheckLogin())
                         {
                             pin.SaveCookie(CookieManager.Filename(acc.Email, acc.Proxie.Replace('_', ':')));
@@ -94,7 +96,7 @@ namespace GUI
 
                                 pin.FillName();
                             }
-                            var response = true;
+                            GUI.ActionInfo response;
                             while (true)
                             {
                                 switch (this.PinAction)
@@ -109,31 +111,31 @@ namespace GUI
                                         break;
 
 
-                                    case PinAction.FollowSelf:
-                                        var newbies  = AccountManager.Accounts.Where(x => x.Followers == 0);
-                                        foreach (var item in newbies)
-                                        {
-                                            response = pin.Follow(item.UserName);
-                                            if(response == false)
-                                            {
-                                                drivers.SuperQuit();
-                                            }
-                                            else
-                                            {
-                                                AlreadyFollowedMyAccount.Add(item.UserName);
-                                                File.AppendAllLines(FOLLOWED, AlreadyFollowedMyAccount);
-                                            }
-                                           AppendTextBox(this.PinAction  + " - " + item.UserName);
-                                        }
+                                    //case PinAction.FollowSelf:
+                                    //    var newbies  = AccountManager.Accounts.Where(x => x.Followers == 0);
+                                    //    foreach (var item in newbies)
+                                    //    {
+                                    //        response = pin.Follow(item.UserName);
+                                    //        if(response == false)
+                                    //        {
+                                    //            drivers.SuperQuit();
+                                    //        }
+                                    //        else
+                                    //        {
+                                    //            AlreadyFollowedMyAccount.Add(item.UserName);
+                                    //            File.AppendAllLines(FOLLOWED, AlreadyFollowedMyAccount);
+                                    //        }
+                                    //       AppendTextBox(this.PinAction  + " - " + item.UserName);
+                                    //    }
                                        
-                                        break;
+                                    //    break;
 
                                     default:
                                         response = pin.MakePost();
                                         break;
 
                                 }
-                                if (this.pinAction == PinAction.Follow)
+                                if (this.pinAction == PinAction.Follow && response.Done )
                                 {
                                     int? before = acc.Follow;
                                     DriverInstance temp = new DriverInstance();
@@ -149,6 +151,22 @@ namespace GUI
                                         break;
                                     }
                                 }
+
+                                if (attemp.Keys.Contains(acc.Email))
+                                {
+                                    if (attemp[acc.Email] > 20)
+                                    {
+                                        AppendTextBox(this.PinAction + "= limit =" + acc.Email);
+                                        drivers.SuperQuit();
+                                    }
+                                    attemp[acc.Email]++;
+                                }
+                                else
+                                {
+                                    attemp[acc.Email] = 0;
+                                }
+
+                                succeAcction++;
                                 AppendTextBox(this.PinAction  + " - " + acc.Proxie   + " - " + acc.Email);
                                 acc.Status = this.PinAction + DateTime.Now.ToString();
 
@@ -253,7 +271,7 @@ namespace GUI
         private Account CheckOneAccount(Account acc, DriverInstance drivers)
         {
             
-            AppendTextBox("account start proxy " + acc.Email);
+            AppendTextBox("check" + acc.Email);
             try
             {
                 Pinterest pin = new Pinterest(drivers.Driver);
@@ -279,7 +297,7 @@ namespace GUI
             labelInfo.Invoke((MethodInvoker)delegate
             {
                 // Running on the UI thread
-                labelInfo.Text = Accounts.Count + "/" + this.startedDriver + "/" + this.stopedDriver;
+                labelInfo.Text =   Accounts.Count + "/start " + this.startedDriver + "/stop " + this.stopedDriver + "/total " + this.succeAcction ;
             });
         }
 

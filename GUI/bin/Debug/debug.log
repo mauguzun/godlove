@@ -112,3 +112,37 @@
 [0221/115350.872:ERROR:crashpad_client_win.cc(505)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)
 [0221/115351.052:ERROR:process_info.cc(359)] UncheckedAllocate
 [0221/123033.974:ERROR:process_info.cc(359)] UncheckedAllocate
+[0223/160609.108:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+[0223/160631.462:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+[0223/160638.642:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+[0223/160657.264:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+[0223/160732.810:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+[0223/160802.687:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+[0223/160806.184:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+[0223/160839.616:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+[0223/160928.845:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+[0223/160940.230:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+[0223/160943.020:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+[0223/211126.143:ERROR:registration_protocol_win.cc(84)] TransactNamedPipe: The pipe has been ended. (0x6D)
+[0223/211126.144:ERROR:file_io.cc(89)] ReadExactly: expected 40, observed 0
+[0224/085116.418:ERROR:crashpad_client_win.cc(505)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)
+[0224/151618.031:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+[0224/151618.037:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+[0225/150802.986:ERROR:process_info.cc(359)] UncheckedAllocate
+[0225/151557.029:ERROR:process_info.cc(359)] UncheckedAllocate
+[0225/151557.074:ERROR:file_io_win.cc(161)] CreateFile D:\temp\scoped_dir71236_407073111\Crashpad\settings.dat: The system cannot find the file specified. (0x2)
+[0227/101206.550:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+[0227/101226.802:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+[0227/101254.069:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+[0227/101308.024:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+[0227/101323.204:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+[0301/031722.149:ERROR:registration_protocol_win.cc(84)] TransactNamedPipe: The pipe has been ended. (0x6D)
+[0301/031722.151:ERROR:file_io.cc(89)] ReadExactly: expected 40, observed 0
+[0301/031744.037:ERROR:registration_protocol_win.cc(84)] TransactNamedPipe: The pipe has been ended. (0x6D)
+[0301/031744.040:ERROR:file_io.cc(89)] ReadExactly: expected 40, observed 0
+[0301/031750.824:ERROR:crashpad_client_win.cc(505)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)
+[0301/031837.887:ERROR:crashpad_client_win.cc(505)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)
+[0301/114404.559:ERROR:file_io_win.cc(161)] CreateFile D:\temp\scoped_dir87280_1421934261\Crashpad\settings.dat: The system cannot find the path specified. (0x3)
+[0301/114404.564:ERROR:file_io_win.cc(170)] CreateFile D:\temp\scoped_dir87280_1421934261\Crashpad\reports\007bcdcf-ec01-4dbe-b69f-159f32b26d78.dmp: The system cannot find the path specified. (0x3)
+[0301/114404.564:ERROR:crash_report_exception_handler.cc(97)] PrepareNewCrashReport failed
+[0303/012655.529:ERROR:crashpad_client_win.cc(505)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)

@@ -48,13 +48,16 @@
             this.addAccountToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.resetStatusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updatePasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.renameAccountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addXmlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.labelCount = new System.Windows.Forms.Label();
             this.labelStatus = new System.Windows.Forms.Label();
             this.textBoxQuery = new System.Windows.Forms.TextBox();
             this.comboBoxColumn = new System.Windows.Forms.ComboBox();
-            this.renameAccountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.visbleBox = new System.Windows.Forms.ToolStripComboBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -69,7 +72,8 @@
             this.rePinToolStripMenuItem,
             this.toolStripMenuItem1,
             this.proxyToolStripMenuItem,
-            this.tryAddAccFromListToolStripMenuItem});
+            this.tryAddAccFromListToolStripMenuItem,
+            this.optionsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1067, 28);
@@ -81,7 +85,7 @@
             this.openToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saveToolStripMenuItem});
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(49, 26);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(49, 24);
             this.openToolStripMenuItem.Text = "Edit";
             // 
             // saveToolStripMenuItem
@@ -118,14 +122,14 @@
             // PinMenuItem
             // 
             this.PinMenuItem.Name = "PinMenuItem";
-            this.PinMenuItem.Size = new System.Drawing.Size(43, 26);
+            this.PinMenuItem.Size = new System.Drawing.Size(43, 24);
             this.PinMenuItem.Text = "Pin";
             this.PinMenuItem.Click += new System.EventHandler(this.PinMenuItem_Click);
             // 
             // rePinToolStripMenuItem
             // 
             this.rePinToolStripMenuItem.Name = "rePinToolStripMenuItem";
-            this.rePinToolStripMenuItem.Size = new System.Drawing.Size(64, 26);
+            this.rePinToolStripMenuItem.Size = new System.Drawing.Size(64, 24);
             this.rePinToolStripMenuItem.Text = "Re Pin";
             this.rePinToolStripMenuItem.Click += new System.EventHandler(this.rePinToolStripMenuItem_Click);
             // 
@@ -135,7 +139,7 @@
             this.groupNameTxt,
             this.setGroupBtn});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(64, 26);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(64, 24);
             this.toolStripMenuItem1.Text = "Group";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
@@ -159,7 +163,7 @@
             this.prooxyCheckerToolStripMenuItem,
             this.clearProxyToolStripMenuItem});
             this.proxyToolStripMenuItem.Name = "proxyToolStripMenuItem";
-            this.proxyToolStripMenuItem.Size = new System.Drawing.Size(59, 26);
+            this.proxyToolStripMenuItem.Size = new System.Drawing.Size(59, 24);
             this.proxyToolStripMenuItem.Text = "Proxy";
             this.proxyToolStripMenuItem.Click += new System.EventHandler(this.proxyToolStripMenuItem_Click);
             // 
@@ -190,7 +194,8 @@
             this.addAccountToolStripMenuItem1,
             this.resetStatusToolStripMenuItem,
             this.updatePasswordToolStripMenuItem,
-            this.renameAccountToolStripMenuItem});
+            this.renameAccountToolStripMenuItem,
+            this.addXmlToolStripMenuItem});
             this.tryAddAccFromListToolStripMenuItem.Name = "tryAddAccFromListToolStripMenuItem";
             this.tryAddAccFromListToolStripMenuItem.Size = new System.Drawing.Size(81, 24);
             this.tryAddAccFromListToolStripMenuItem.Text = " Account";
@@ -222,6 +227,20 @@
             this.updatePasswordToolStripMenuItem.Size = new System.Drawing.Size(206, 26);
             this.updatePasswordToolStripMenuItem.Text = "Update Password";
             this.updatePasswordToolStripMenuItem.Click += new System.EventHandler(this.updatePasswordToolStripMenuItem_Click);
+            // 
+            // renameAccountToolStripMenuItem
+            // 
+            this.renameAccountToolStripMenuItem.Name = "renameAccountToolStripMenuItem";
+            this.renameAccountToolStripMenuItem.Size = new System.Drawing.Size(206, 26);
+            this.renameAccountToolStripMenuItem.Text = "Rename Account";
+            this.renameAccountToolStripMenuItem.Click += new System.EventHandler(this.renameAccountToolStripMenuItem_Click);
+            // 
+            // addXmlToolStripMenuItem
+            // 
+            this.addXmlToolStripMenuItem.Name = "addXmlToolStripMenuItem";
+            this.addXmlToolStripMenuItem.Size = new System.Drawing.Size(206, 26);
+            this.addXmlToolStripMenuItem.Text = "Add Xml";
+            this.addXmlToolStripMenuItem.Click += new System.EventHandler(this.addXmlToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
@@ -290,12 +309,26 @@
             this.comboBoxColumn.Size = new System.Drawing.Size(121, 24);
             this.comboBoxColumn.TabIndex = 7;
             // 
-            // renameAccountToolStripMenuItem
+            // optionsToolStripMenuItem
             // 
-            this.renameAccountToolStripMenuItem.Name = "renameAccountToolStripMenuItem";
-            this.renameAccountToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.renameAccountToolStripMenuItem.Text = "Rename Account";
-            this.renameAccountToolStripMenuItem.Click += new System.EventHandler(this.renameAccountToolStripMenuItem_Click);
+            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.visbleBox});
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(75, 24);
+            this.optionsToolStripMenuItem.Text = "Options";
+            this.optionsToolStripMenuItem.CheckStateChanged += new System.EventHandler(this.optionsToolStripMenuItem_CheckStateChanged);
+            // 
+            // visbleBox
+            // 
+            this.visbleBox.AutoCompleteCustomSource.AddRange(new string[] {
+            "On",
+            "Off"});
+            this.visbleBox.Items.AddRange(new object[] {
+            "On",
+            "Off"});
+            this.visbleBox.Name = "visbleBox";
+            this.visbleBox.Size = new System.Drawing.Size(121, 28);
+            this.visbleBox.TextChanged += new System.EventHandler(this.visbleBox_TextChanged);
             // 
             // Form1
             // 
@@ -349,6 +382,9 @@
         private System.Windows.Forms.TextBox textBoxQuery;
         private System.Windows.Forms.ComboBox comboBoxColumn;
         private System.Windows.Forms.ToolStripMenuItem renameAccountToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addXmlToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripComboBox visbleBox;
     }
 }
 
