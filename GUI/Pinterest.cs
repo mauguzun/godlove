@@ -209,13 +209,15 @@ namespace GUI
                 {
                     board.Click();
                     Thread.Sleep(new TimeSpan(0, 0, 7));
-                    var pinnned =  Driver.FindElementsByCssSelector("[data-test-id='seeItNow']") ;
+                    var pinnned =  Driver.FindElementsByCssSelector("[data-test-id='seeItNow'] a") ;
                     var modal =  Driver.FindElementsByCssSelector("[data-test-id='error-modal']");
                  
                   
                     if(pinnned.Count() > 0)
                     {
-                        return new ActionInfo(true, "https://pinterest.com" +  pinnned[0].GetAttribute("href"));
+                    
+                
+                        return new ActionInfo(true,   pinnned[0].GetAttribute("href"));
                     
                     }
                     else if(modal.Count() > 0 )

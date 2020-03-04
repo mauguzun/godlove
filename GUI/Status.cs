@@ -167,7 +167,7 @@ namespace GUI
                                 }
 
                                 succeAcction++;
-                                AppendTextBox(this.PinAction  + " - " + acc.Proxie   + " - " + acc.Email);
+                                AppendTextBox(this.PinAction  + " - " + response.Done + " - " + response.Info );
                                 acc.Status = this.PinAction + DateTime.Now.ToString();
 
                             }
