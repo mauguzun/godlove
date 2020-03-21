@@ -14,7 +14,7 @@ namespace GUI
     {
         private const string PATH = @"C:\my_work_files\pinterest\full_info_copy.txt";
         private static AccountManager instance;
-        public static SortableBindingList<Account> Accounts { get; set; }
+        public static List<Account> Accounts { get; set; }
 
         private AccountManager()
         { }
@@ -72,8 +72,8 @@ namespace GUI
                 accounts.Add(acc);
             }
 
-
-            Accounts = new SortableBindingList<Account>(accounts);
+           
+            Accounts = new List<Account>(accounts);
 
         }
         private static ReaderWriterLockSlim lock_ = new ReaderWriterLockSlim();
@@ -84,7 +84,7 @@ namespace GUI
             {
                 File.Delete(PATH);
 
-                foreach (Account account in Accounts)
+                foreach (Account account in Accounts.ToList())
                 {
                     File.AppendAllText(PATH, account.ToString() + Environment.NewLine);
 

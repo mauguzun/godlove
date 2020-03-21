@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -36,6 +37,8 @@
             this.followWhere0ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PinMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rePinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.yourPinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.randomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.groupNameTxt = new System.Windows.Forms.ToolStripTextBox();
             this.setGroupBtn = new System.Windows.Forms.ToolStripMenuItem();
@@ -50,14 +53,14 @@
             this.updatePasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renameAccountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addXmlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.visbleBox = new System.Windows.Forms.ToolStripComboBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.labelCount = new System.Windows.Forms.Label();
             this.labelStatus = new System.Windows.Forms.Label();
             this.textBoxQuery = new System.Windows.Forms.TextBox();
             this.comboBoxColumn = new System.Windows.Forms.ComboBox();
-            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.visbleBox = new System.Windows.Forms.ToolStripComboBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -128,10 +131,27 @@
             // 
             // rePinToolStripMenuItem
             // 
+            this.rePinToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.randomToolStripMenuItem,
+            this.yourPinToolStripMenuItem});
             this.rePinToolStripMenuItem.Name = "rePinToolStripMenuItem";
             this.rePinToolStripMenuItem.Size = new System.Drawing.Size(64, 24);
             this.rePinToolStripMenuItem.Text = "Re Pin";
             this.rePinToolStripMenuItem.Click += new System.EventHandler(this.rePinToolStripMenuItem_Click);
+            // 
+            // yourPinToolStripMenuItem
+            // 
+            this.yourPinToolStripMenuItem.Name = "yourPinToolStripMenuItem";
+            this.yourPinToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.yourPinToolStripMenuItem.Text = "Your Pin";
+            this.yourPinToolStripMenuItem.Click += new System.EventHandler(this.yourPinToolStripMenuItem_Click);
+            // 
+            // randomToolStripMenuItem
+            // 
+            this.randomToolStripMenuItem.Name = "randomToolStripMenuItem";
+            this.randomToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.randomToolStripMenuItem.Text = "Random";
+            this.randomToolStripMenuItem.Click += new System.EventHandler(this.randomToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -209,6 +229,7 @@
             // 
             // addAccountToolStripMenuItem1
             // 
+            this.addAccountToolStripMenuItem1.Image = global::GUI.Properties.Resources.Danleech_Simple_Pinterest;
             this.addAccountToolStripMenuItem1.Name = "addAccountToolStripMenuItem1";
             this.addAccountToolStripMenuItem1.Size = new System.Drawing.Size(206, 26);
             this.addAccountToolStripMenuItem1.Text = "Add account";
@@ -241,6 +262,27 @@
             this.addXmlToolStripMenuItem.Size = new System.Drawing.Size(206, 26);
             this.addXmlToolStripMenuItem.Text = "Add Xml";
             this.addXmlToolStripMenuItem.Click += new System.EventHandler(this.addXmlToolStripMenuItem_Click);
+            // 
+            // optionsToolStripMenuItem
+            // 
+            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.visbleBox});
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(75, 24);
+            this.optionsToolStripMenuItem.Text = "Options";
+            this.optionsToolStripMenuItem.CheckStateChanged += new System.EventHandler(this.optionsToolStripMenuItem_CheckStateChanged);
+            // 
+            // visbleBox
+            // 
+            this.visbleBox.AutoCompleteCustomSource.AddRange(new string[] {
+            "On",
+            "Off"});
+            this.visbleBox.Items.AddRange(new object[] {
+            "On",
+            "Off"});
+            this.visbleBox.Name = "visbleBox";
+            this.visbleBox.Size = new System.Drawing.Size(121, 28);
+            this.visbleBox.TextChanged += new System.EventHandler(this.visbleBox_TextChanged);
             // 
             // statusStrip1
             // 
@@ -309,27 +351,6 @@
             this.comboBoxColumn.Size = new System.Drawing.Size(121, 24);
             this.comboBoxColumn.TabIndex = 7;
             // 
-            // optionsToolStripMenuItem
-            // 
-            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.visbleBox});
-            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(75, 24);
-            this.optionsToolStripMenuItem.Text = "Options";
-            this.optionsToolStripMenuItem.CheckStateChanged += new System.EventHandler(this.optionsToolStripMenuItem_CheckStateChanged);
-            // 
-            // visbleBox
-            // 
-            this.visbleBox.AutoCompleteCustomSource.AddRange(new string[] {
-            "On",
-            "Off"});
-            this.visbleBox.Items.AddRange(new object[] {
-            "On",
-            "Off"});
-            this.visbleBox.Name = "visbleBox";
-            this.visbleBox.Size = new System.Drawing.Size(121, 28);
-            this.visbleBox.TextChanged += new System.EventHandler(this.visbleBox_TextChanged);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -342,10 +363,11 @@
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Account Manager";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -385,6 +407,8 @@
         private System.Windows.Forms.ToolStripMenuItem addXmlToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripComboBox visbleBox;
+        private System.Windows.Forms.ToolStripMenuItem yourPinToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem randomToolStripMenuItem;
     }
 }
 

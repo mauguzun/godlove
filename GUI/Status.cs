@@ -18,10 +18,13 @@ namespace GUI
 {
     public partial class Status : Form
     {
+        public int limit = 40;
         public static bool show = false;
-        static  string FOLLOWED = @"C:\Users\mauguzun\Desktop\stat.txt";
+        public  static  string FOLLOWED = @"C:\Users\mauguzun\Desktop\stat.txt";
+        public static  string PINNED = "pinned.txt";
         public static List<string> proxieList = File.ReadAllLines(@"C:\my_work_files\pinterest\proxy.txt").ToList();
-        public SortableBindingList<Account> Accounts { get; set; }
+        public string[] RepinPinList { get; internal set; }
+        public SortableBindingList<Account> Accounts { get;  set; }
         private PinAction pinAction = PinAction.Pin;
         public static List<string> AlreadyFollowedMyAccount = new List<string>();
         Dictionary<string, int> attemp = new Dictionary<string, int>();
@@ -45,6 +48,7 @@ namespace GUI
 
         }
 
+       
 
         public Status()
         {
@@ -54,9 +58,17 @@ namespace GUI
             {
                 AlreadyFollowedMyAccount = File.ReadAllLines(FOLLOWED).ToList();
             }
+            this.richTextBox.DetectUrls = true;
+            this.richTextBox.TextChanged += RichTextBox_TextChanged;
         }
 
-
+        private void RichTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if(richTextBox.Lines.Count() > 100)
+            {
+                richTextBox.Text = "";
+            }
+        }
 
         public void PinStart()
         {
@@ -96,46 +108,78 @@ namespace GUI
 
                                 pin.FillName();
                             }
-                            GUI.ActionInfo response;
+                            GUI.ActionInfo response = new ActionInfo(false,null);
                             while (true)
                             {
                                 switch (this.PinAction)
                                 {
                                     case PinAction.Follow:
+                                        limit = 5;
                                         response = pin.Follow();
                                         break;
 
 
                                     case PinAction.Repin:
-                                        response = pin.Repin();
+                                   
+                                        int d = RepinPinList.Count(); ;
+                                        if (RepinPinList.Count() > succeAcction)
+                                            response = pin.Repin(RepinPinList[succeAcction]);
+                                        else
+                                            this.Close();
+                            
+                                          
+                                        
+                                        break;
+                                        //
+                                    case PinAction.RepinOther:
+
+                                        pin.Driver.Url = "https://www.pinterest.com/";
+                                        var pinsElement = pin.Driver.FindElementsByCssSelector("[data-force-refresh]");
+                                        List<string> hrefs = new List<string>();
+
+                                        foreach (var item in pinsElement)
+                                        {
+                                            hrefs.Add(item.GetAttribute("href"));
+                                        }
+                                        foreach (var href in hrefs)
+                                        {
+                                            response = pin.Repin(href);
+                                            if (response.Done == false)
+                                                break;
+                                            else
+                                                AppendTextBox(href);
+
+                                            
+                                        }
                                         break;
 
 
-                                    //case PinAction.FollowSelf:
-                                    //    var newbies  = AccountManager.Accounts.Where(x => x.Followers == 0);
-                                    //    foreach (var item in newbies)
-                                    //    {
-                                    //        response = pin.Follow(item.UserName);
-                                    //        if(response == false)
-                                    //        {
-                                    //            drivers.SuperQuit();
-                                    //        }
-                                    //        else
-                                    //        {
-                                    //            AlreadyFollowedMyAccount.Add(item.UserName);
-                                    //            File.AppendAllLines(FOLLOWED, AlreadyFollowedMyAccount);
-                                    //        }
-                                    //       AppendTextBox(this.PinAction  + " - " + item.UserName);
-                                    //    }
-                                       
-                                    //    break;
+
+                                    case PinAction.FollowSelf:
+                                        var newbies = AccountManager.Accounts.Where(x => x.Followers == 0);
+                                        foreach (var item in newbies)
+                                        {
+                                            response = pin.Follow(item.UserName);
+                                            if (response.Done == false)
+                                            {
+                                                drivers.SuperQuit();
+                                            }
+                                            else
+                                            {
+                                                AlreadyFollowedMyAccount.Add(item.UserName);
+                                                File.AppendAllLines(FOLLOWED, AlreadyFollowedMyAccount);
+                                            }
+                                            AppendTextBox( " followed  " + item.UserName);
+                                        }
+
+                                        break;
 
                                     default:
                                         response = pin.MakePost();
                                         break;
 
                                 }
-                                if (this.pinAction == PinAction.Follow && response.Done )
+                                if (this.pinAction == PinAction.Follow && response.Done == true )
                                 {
                                     int? before = acc.Follow;
                                     DriverInstance temp = new DriverInstance();
@@ -151,10 +195,14 @@ namespace GUI
                                         break;
                                     }
                                 }
+                                else if(this.pinAction ==  PinAction.Pin && response.Done == true )
+                                {
+                                    File.AppendAllText(PINNED, response.Info + Environment.NewLine );
+                                }
 
                                 if (attemp.Keys.Contains(acc.Email))
                                 {
-                                    if (attemp[acc.Email] > 20)
+                                    if (attemp[acc.Email] > limit)
                                     {
                                         AppendTextBox(this.PinAction + "= limit =" + acc.Email);
                                         drivers.SuperQuit();
@@ -166,9 +214,16 @@ namespace GUI
                                     attemp[acc.Email] = 0;
                                 }
 
+                              
+
                                 succeAcction++;
                                 AppendTextBox(this.PinAction  + " - " + response.Done + " - " + response.Info );
                                 acc.Status = this.PinAction + DateTime.Now.ToString();
+
+                                //if(response.Done == false)
+                                //{
+                                //    break;
+                                //}
 
                             }
                      
@@ -224,6 +279,7 @@ namespace GUI
                 this.Invoke(new Action<string>(AppendTextBox), new object[] { value });
                 return;
             }
+            
             richTextBox.Text = DateTime.Now.ToLongTimeString() + ":" + value + "\n" + richTextBox.Text;
             richTextBox.Refresh();
         }
@@ -297,13 +353,13 @@ namespace GUI
             labelInfo.Invoke((MethodInvoker)delegate
             {
                 // Running on the UI thread
-                labelInfo.Text =   Accounts.Count + "/start " + this.startedDriver + "/stop " + this.stopedDriver + "/total " + this.succeAcction ;
+                labelInfo.Text =   Accounts.Count + "/start " + this.startedDriver + "/ stop " + this.stopedDriver + "/ good  " + this.succeAcction ;
             });
         }
 
         private void Setup()
         {
-            this.dataGridView1.DataSource = Accounts;
+           this.dataGridView1.DataSource =    Accounts  ;
             this.dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.AutoResizeColumns();
@@ -318,6 +374,11 @@ namespace GUI
             this.dataGridView1.Columns[0].Visible = true;
             this.dataGridView1.Columns[1].Visible = true;
             this.dataGridView1.Columns[10].Visible = true;
+        }
+
+        private void Status_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

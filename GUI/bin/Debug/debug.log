@@ -146,3 +146,14 @@
 [0301/114404.564:ERROR:file_io_win.cc(170)] CreateFile D:\temp\scoped_dir87280_1421934261\Crashpad\reports\007bcdcf-ec01-4dbe-b69f-159f32b26d78.dmp: The system cannot find the path specified. (0x3)
 [0301/114404.564:ERROR:crash_report_exception_handler.cc(97)] PrepareNewCrashReport failed
 [0303/012655.529:ERROR:crashpad_client_win.cc(505)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)
+[0306/040951.354:ERROR:exception_handler_server.cc(527)] ConnectNamedPipe: The pipe is being closed. (0xE8)
+[0306/041546.575:ERROR:exception_handler_server.cc(527)] ConnectNamedPipe: The pipe is being closed. (0xE8)
+[0306/045140.339:ERROR:exception_handler_server.cc(527)] ConnectNamedPipe: The pipe is being closed. (0xE8)
+[0306/045142.102:ERROR:exception_handler_server.cc(527)] ConnectNamedPipe: The pipe is being closed. (0xE8)
+[0306/052454.753:ERROR:crashpad_client_win.cc(505)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)
+[0306/163057.399:ERROR:registration_protocol_win.cc(84)] TransactNamedPipe: The pipe has been ended. (0x6D)
+[0306/163057.401:ERROR:file_io.cc(89)] ReadExactly: expected 40, observed 0
+[0306/164234.562:ERROR:crashpad_client_win.cc(505)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)
+[0316/204701.913:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+[0318/111821.413:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+                                                                                                                                                                                                                                                

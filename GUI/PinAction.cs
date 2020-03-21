@@ -5,6 +5,7 @@
         Pin,
         Follow,
         Repin,
+        RepinOther,
         FollowSelf
     }
 }

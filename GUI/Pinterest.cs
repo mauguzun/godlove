@@ -104,14 +104,16 @@ namespace GUI
                 }
                 Driver.Url = "https://pinterest.com";
                 Driver.Url = "https://pinterest.com";
-                if (Driver.FindElementsByCssSelector("[aria-label='Your profile']").Count() != 0)
+                if (Driver.FindElementsByCssSelector("[data-test-id='header-profile']").Count() != 0)
                 {
 
                     return true;
                 }
                 return false;
             }
-            catch { return false; }
+            catch(Exception e) {
+                var s = e.Message;
+                return false; }
 
 
 
@@ -119,56 +121,50 @@ namespace GUI
 
         }
 
-        public ActionInfo Repin()
+         
+
+        public ActionInfo Repin(string url)
         {
-            this.Driver.Url = "https://pinterest.com/homefeed/";
-            var images = Driver.FindElementsByCssSelector("[data-test-id='pinrep-image']");
-            if (images.Count() > 0)
+            this.Driver.Url = url;
+
+            Thread.Sleep(new TimeSpan(0, 0, 2));
+            if (Driver.FindElementsByCssSelector(".experienceSystemPushOverlay").Count != 0)
             {
-                foreach(var image in images)
+                Driver.FindElementsByCssSelector(".experienceSystemPushOverlay")[0].Click();
+
+            }
+            var save = Driver.FindElementsByCssSelector("[data-test-id='SaveButton']");
+            if (save.Count() == 0)
+            {
+                save = Driver.FindElementsByCssSelector("[data-test-id='PinBetterSaveButton']");
+                if(save.Count != 0)
                 {
-                    image.Click();
-                  //  Driver.FindElementByCssSelector("body").Click();
-
-                    var likeButton = Driver.FindElementsByCssSelector("#SaveButton");
-                    if (likeButton.Count() ==0)
-                    { 
-                         likeButton = Driver.FindElementsByCssSelector("[data-test-id='SaveButton']");
-
-                    }
-                    if (likeButton.Count() > 0 )
-                    {
-                        try
-                        {
-                            Thread.Sleep(new TimeSpan(0, 0, 4));
-                            try
-                            {
-                                likeButton[0].Click();
-                            }
-                            catch { }
-                           
-                         //   likeButton[0].Click();
-                            var boards = Driver.FindElementsByCssSelector("div[data-test-id='boardWithoutSection']");
-                            if (boards.Count() > 0)
-                            {
-                                boards[0].Click();
-                                Thread.Sleep(new TimeSpan(0, 0, 4));
-                                return new ActionInfo(true,"repined");
-                            }
-                        }
-                        catch(Exception ex)
-                        {
-                            var d = ex.Message;
-                            var er = 12;
-                        }
-                       
-
-                      
-                    }
+                    save[0].Click();
+                    return new ActionInfo(true, url);
                 }
+            }
+
+
+            if (save.Count() > 0)
+            {
+
+
+                save[0].Click();
+
+
+                var boards = Driver.FindElementsByCssSelector("div[data-test-id='boardWithoutSection']");
+                if (boards.Count() > 0)
+                {
+                    boards[0].Click();
+                    Thread.Sleep(new TimeSpan(0, 0, 4));
+                    return new ActionInfo(true, "repined");
+                }
+
             }
             return new ActionInfo(false, "repined");
         }
+
+
 
         public void SaveCookie(string filename)
         {
@@ -179,7 +175,7 @@ namespace GUI
 
 
 
-        public ActionInfo   MakePost()
+        public ActionInfo MakePost()
         {
             Driver.Url = "http://drum.nl.eu.org/get";
             //
@@ -189,7 +185,7 @@ namespace GUI
             if (search.Count == 0)
             {
                 return new ActionInfo(false, "Not logined ?");
-              
+
             }
             else if (boards.Count == 0 && search.Count != 0)
             {
@@ -198,10 +194,10 @@ namespace GUI
                 ss.SaveAsFile("omg.png", ScreenshotImageFormat.Png);
 
 
-              
+
                 CreateBoard();
                 return new ActionInfo(true, "We make new board ! ");
-               
+
             }
             foreach (var board in boards)
             {
@@ -209,21 +205,21 @@ namespace GUI
                 {
                     board.Click();
                     Thread.Sleep(new TimeSpan(0, 0, 7));
-                    var pinnned =  Driver.FindElementsByCssSelector("[data-test-id='seeItNow'] a") ;
-                    var modal =  Driver.FindElementsByCssSelector("[data-test-id='error-modal']");
-                 
-                  
-                    if(pinnned.Count() > 0)
+                    var pinnned = Driver.FindElementsByCssSelector("[data-test-id='seeItNow'] a");
+                    var modal = Driver.FindElementsByCssSelector("[data-test-id='error-modal']");
+
+
+                    if (pinnned.Count() > 0)
                     {
-                    
-                
-                        return new ActionInfo(true,   pinnned[0].GetAttribute("href"));
-                    
+
+
+                        return new ActionInfo(true, pinnned[0].GetAttribute("href"));
+
                     }
-                    else if(modal.Count() > 0 )
+                    else if (modal.Count() > 0)
                     {
-                      
-                        return new ActionInfo(false,  modal[0].Text);
+
+                        return new ActionInfo(false, modal[0].Text);
                     }
 
                     return new ActionInfo(false, "Extra false"); ;
@@ -231,8 +227,8 @@ namespace GUI
                 catch (Exception ex)
                 {
 
-                      
-                      return new ActionInfo(true, ex.Message); ;
+
+                    return new ActionInfo(true, ex.Message); ;
 
                 }
 
@@ -244,11 +240,11 @@ namespace GUI
         {
             Driver.Url = "https://www.pinterest.com/" + nickname;
             var buttons = Driver.FindElementsByCssSelector("div");
-            if(buttons.Count() > 0)
+            if (buttons.Count() > 0)
             {
-                foreach(var button in buttons)
+                foreach (var button in buttons)
                 {
-                    if(button.Text.Trim().ToLower() == "follow")
+                    if (button.Text.Trim().ToLower() == "follow")
                     {
                         button.Click();
                         return new ActionInfo(true, "followed ");
@@ -288,7 +284,7 @@ namespace GUI
 
 
             }
-            return new ActionInfo(true,"followed not checked");
+            return new ActionInfo(true, "followed not checked");
         }
 
         public bool ValidName()
@@ -311,7 +307,7 @@ namespace GUI
 
         }
 
-        public  Account AccountInfo(Account acc)
+        public Account AccountInfo(Account acc)
         {
             try
             {
@@ -365,8 +361,8 @@ namespace GUI
                     Driver.FindElementById("last_name").SendKeys(Keys.Backspace);
                 }
 
-                Driver.FindElementById("first_name").SendKeys(  RandomValue.GetString("Data/names.txt").ToLower()   );
-                Driver.FindElementById("last_name").SendKeys(  RandomValue.GetString("Data/names.txt").ToLower());
+                Driver.FindElementById("first_name").SendKeys(RandomValue.GetString("Data/names.txt").ToLower());
+                Driver.FindElementById("last_name").SendKeys(RandomValue.GetString("Data/names.txt").ToLower());
                 Driver.FindElementById("first_name").SendKeys(Keys.Space);
 
 
@@ -383,7 +379,7 @@ namespace GUI
                         button.Click();
                         Thread.Sleep(new TimeSpan(0, 0, 5));
                         break;
-                      
+
                     }
                 }
                 AddImage();
@@ -405,11 +401,11 @@ namespace GUI
                 Driver.Url = $"https://www.pinterest.com/{this.UserName}/boards/";
                 Thread.Sleep(new TimeSpan(0, 0, 2));
                 var buttons = Driver.FindElementsByCssSelector("[data-test-id='createBoardCard']");
-                buttons[0].Click(); 
+                buttons[0].Click();
                 Thread.Sleep(new TimeSpan(0, 0, 5));
-              
+
                 //Driver.FindElementByCssSelector("div[title='Create board']").Click(); 
-               // Thread.Sleep(new TimeSpan(0, 0, 5));
+                // Thread.Sleep(new TimeSpan(0, 0, 5));
                 Driver.FindElementById("boardEditName").SendKeys(RandomValue.GetString(@"Data/city_names.txt"));
                 buttons = Driver.FindElementsByTagName("button");
                 foreach (var button in buttons)
@@ -426,7 +422,7 @@ namespace GUI
                 }
                 return false;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var d = ex.Message;
                 return false;

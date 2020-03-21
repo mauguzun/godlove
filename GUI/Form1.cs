@@ -18,7 +18,6 @@ namespace GUI
 {
     public partial class Form1 : Form
     {
-        private const string PATH = @"C:\my_work_files\pinterest\full_info_copy.txt";
         private const string ALREADY = @"C:\my_work_files\pinterest\already.txt";
         private int repeatAccountInOneProxy;
         public static List<string> proxieList = File.ReadAllLines(@"C:\my_work_files\pinterest\proxy.txt").ToList();
@@ -36,7 +35,7 @@ namespace GUI
             AccountManager.GetInstance();
             InitializeComponent();
 
-            this.dataGridView1.DataSource = AccountManager.Accounts;
+            this.dataGridView1.DataSource =  new SortableBindingList<Account>(  AccountManager.Accounts ) ;
             this.labelCount.Text = AccountManager.Accounts.Count.ToString();
             this.dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.RowHeadersVisible = false;
@@ -113,15 +112,6 @@ namespace GUI
             });
         }
 
-        public void DeleteProxie(string proxie)
-        {
-            try
-            {
-                proxieList.Remove(proxie.Replace("_", ":"));
-                File.WriteAllLines(@"C:\my_work_files\pinterest\proxy.txt", proxieList);
-            }
-            catch { }
-        }
 
         private void prooxyCheckerToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -241,6 +231,7 @@ namespace GUI
                                //      SetInfo("finded checking" + acc.Email);
                                var newAcc = pin.AccountInfo(acc);
                                AccountManager.Accounts.Add(newAcc);
+                     
                                AccountManager.GetInstance().Save();
 
                            }
@@ -256,11 +247,7 @@ namespace GUI
                        }
                        drivers.SuperQuit();
                    });
-                foreach (Account acc in newAccount)
-                {
-
-                }
-
+                
 
             });
 
@@ -300,12 +287,7 @@ namespace GUI
 
         private void rePinToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Status status = new Status();
-            status.Accounts = new SortableBindingList<Account>(SelectAccount());
-            status.Show();
-            Status.show = show;
-            status.PinAction = PinAction.Repin;
-            status.PinStart();
+            
         }
 
         private void followToolStripMenuItem_Click(object sender, EventArgs e)
@@ -498,7 +480,32 @@ namespace GUI
            if (visbleBox.SelectedItem.ToString() == "On")
             {
                 show = true;
+            }else
+            {
+                show = false;
             }
+        }
+
+        private void yourPinToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Status status = new Status();
+            status.Accounts = new SortableBindingList<Account>(SelectAccount());
+            status.Show();
+            Status.show = show;
+            status.PinAction = PinAction.Repin;
+            status.RepinPinList = File.ReadAllLines(Status.PINNED);
+
+            status.PinStart();
+        }
+
+        private void randomToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Status status = new Status();
+            status.Accounts = new SortableBindingList<Account>(SelectAccount());
+            status.Show();
+            Status.show = show;
+            status.PinAction = PinAction.RepinOther;
+            status.PinStart();
         }
     }
 
