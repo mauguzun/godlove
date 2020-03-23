@@ -37,8 +37,8 @@
             this.followWhere0ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PinMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rePinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.yourPinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.randomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.yourPinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.groupNameTxt = new System.Windows.Forms.ToolStripTextBox();
             this.setGroupBtn = new System.Windows.Forms.ToolStripMenuItem();
@@ -61,6 +61,7 @@
             this.labelStatus = new System.Windows.Forms.Label();
             this.textBoxQuery = new System.Windows.Forms.TextBox();
             this.comboBoxColumn = new System.Windows.Forms.ComboBox();
+            this.labelSelectedCount = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -79,7 +80,7 @@
             this.optionsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1067, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1067, 30);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -88,7 +89,7 @@
             this.openToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saveToolStripMenuItem});
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(49, 24);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(49, 26);
             this.openToolStripMenuItem.Text = "Edit";
             // 
             // saveToolStripMenuItem
@@ -104,7 +105,7 @@
             this.followToolStripMenuItem,
             this.followWhere0ToolStripMenuItem});
             this.FolloMenu.Name = "FolloMenu";
-            this.FolloMenu.Size = new System.Drawing.Size(67, 24);
+            this.FolloMenu.Size = new System.Drawing.Size(67, 26);
             this.FolloMenu.Text = "Follow";
             this.FolloMenu.Click += new System.EventHandler(this.FolloMenu_Click);
             // 
@@ -125,7 +126,7 @@
             // PinMenuItem
             // 
             this.PinMenuItem.Name = "PinMenuItem";
-            this.PinMenuItem.Size = new System.Drawing.Size(43, 24);
+            this.PinMenuItem.Size = new System.Drawing.Size(43, 26);
             this.PinMenuItem.Text = "Pin";
             this.PinMenuItem.Click += new System.EventHandler(this.PinMenuItem_Click);
             // 
@@ -135,23 +136,23 @@
             this.randomToolStripMenuItem,
             this.yourPinToolStripMenuItem});
             this.rePinToolStripMenuItem.Name = "rePinToolStripMenuItem";
-            this.rePinToolStripMenuItem.Size = new System.Drawing.Size(64, 24);
+            this.rePinToolStripMenuItem.Size = new System.Drawing.Size(64, 26);
             this.rePinToolStripMenuItem.Text = "Re Pin";
             this.rePinToolStripMenuItem.Click += new System.EventHandler(this.rePinToolStripMenuItem_Click);
-            // 
-            // yourPinToolStripMenuItem
-            // 
-            this.yourPinToolStripMenuItem.Name = "yourPinToolStripMenuItem";
-            this.yourPinToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.yourPinToolStripMenuItem.Text = "Your Pin";
-            this.yourPinToolStripMenuItem.Click += new System.EventHandler(this.yourPinToolStripMenuItem_Click);
             // 
             // randomToolStripMenuItem
             // 
             this.randomToolStripMenuItem.Name = "randomToolStripMenuItem";
-            this.randomToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.randomToolStripMenuItem.Size = new System.Drawing.Size(148, 26);
             this.randomToolStripMenuItem.Text = "Random";
             this.randomToolStripMenuItem.Click += new System.EventHandler(this.randomToolStripMenuItem_Click);
+            // 
+            // yourPinToolStripMenuItem
+            // 
+            this.yourPinToolStripMenuItem.Name = "yourPinToolStripMenuItem";
+            this.yourPinToolStripMenuItem.Size = new System.Drawing.Size(148, 26);
+            this.yourPinToolStripMenuItem.Text = "Your Pin";
+            this.yourPinToolStripMenuItem.Click += new System.EventHandler(this.yourPinToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -159,7 +160,7 @@
             this.groupNameTxt,
             this.setGroupBtn});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(64, 24);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(64, 26);
             this.toolStripMenuItem1.Text = "Group";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
@@ -183,7 +184,7 @@
             this.prooxyCheckerToolStripMenuItem,
             this.clearProxyToolStripMenuItem});
             this.proxyToolStripMenuItem.Name = "proxyToolStripMenuItem";
-            this.proxyToolStripMenuItem.Size = new System.Drawing.Size(59, 24);
+            this.proxyToolStripMenuItem.Size = new System.Drawing.Size(59, 26);
             this.proxyToolStripMenuItem.Text = "Proxy";
             this.proxyToolStripMenuItem.Click += new System.EventHandler(this.proxyToolStripMenuItem_Click);
             // 
@@ -217,13 +218,13 @@
             this.renameAccountToolStripMenuItem,
             this.addXmlToolStripMenuItem});
             this.tryAddAccFromListToolStripMenuItem.Name = "tryAddAccFromListToolStripMenuItem";
-            this.tryAddAccFromListToolStripMenuItem.Size = new System.Drawing.Size(81, 24);
+            this.tryAddAccFromListToolStripMenuItem.Size = new System.Drawing.Size(81, 26);
             this.tryAddAccFromListToolStripMenuItem.Text = " Account";
             // 
             // checkAccountToolStripMenuItem
             // 
             this.checkAccountToolStripMenuItem.Name = "checkAccountToolStripMenuItem";
-            this.checkAccountToolStripMenuItem.Size = new System.Drawing.Size(206, 26);
+            this.checkAccountToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.checkAccountToolStripMenuItem.Text = "Check Account";
             this.checkAccountToolStripMenuItem.Click += new System.EventHandler(this.checkAccountToolStripMenuItem_Click);
             // 
@@ -231,35 +232,35 @@
             // 
             this.addAccountToolStripMenuItem1.Image = global::GUI.Properties.Resources.Danleech_Simple_Pinterest;
             this.addAccountToolStripMenuItem1.Name = "addAccountToolStripMenuItem1";
-            this.addAccountToolStripMenuItem1.Size = new System.Drawing.Size(206, 26);
+            this.addAccountToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
             this.addAccountToolStripMenuItem1.Text = "Add account";
             this.addAccountToolStripMenuItem1.Click += new System.EventHandler(this.addAccountToolStripMenuItem1_Click_1);
             // 
             // resetStatusToolStripMenuItem
             // 
             this.resetStatusToolStripMenuItem.Name = "resetStatusToolStripMenuItem";
-            this.resetStatusToolStripMenuItem.Size = new System.Drawing.Size(206, 26);
+            this.resetStatusToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.resetStatusToolStripMenuItem.Text = "Reset Status";
             this.resetStatusToolStripMenuItem.Click += new System.EventHandler(this.resetStatusToolStripMenuItem_Click);
             // 
             // updatePasswordToolStripMenuItem
             // 
             this.updatePasswordToolStripMenuItem.Name = "updatePasswordToolStripMenuItem";
-            this.updatePasswordToolStripMenuItem.Size = new System.Drawing.Size(206, 26);
+            this.updatePasswordToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.updatePasswordToolStripMenuItem.Text = "Update Password";
             this.updatePasswordToolStripMenuItem.Click += new System.EventHandler(this.updatePasswordToolStripMenuItem_Click);
             // 
             // renameAccountToolStripMenuItem
             // 
             this.renameAccountToolStripMenuItem.Name = "renameAccountToolStripMenuItem";
-            this.renameAccountToolStripMenuItem.Size = new System.Drawing.Size(206, 26);
+            this.renameAccountToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.renameAccountToolStripMenuItem.Text = "Rename Account";
             this.renameAccountToolStripMenuItem.Click += new System.EventHandler(this.renameAccountToolStripMenuItem_Click);
             // 
             // addXmlToolStripMenuItem
             // 
             this.addXmlToolStripMenuItem.Name = "addXmlToolStripMenuItem";
-            this.addXmlToolStripMenuItem.Size = new System.Drawing.Size(206, 26);
+            this.addXmlToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.addXmlToolStripMenuItem.Text = "Add Xml";
             this.addXmlToolStripMenuItem.Click += new System.EventHandler(this.addXmlToolStripMenuItem_Click);
             // 
@@ -268,7 +269,7 @@
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.visbleBox});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(75, 24);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(75, 26);
             this.optionsToolStripMenuItem.Text = "Options";
             this.optionsToolStripMenuItem.CheckStateChanged += new System.EventHandler(this.optionsToolStripMenuItem_CheckStateChanged);
             // 
@@ -298,13 +299,14 @@
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 28);
+            this.dataGridView1.Location = new System.Drawing.Point(0, 30);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.Size = new System.Drawing.Size(1067, 504);
+            this.dataGridView1.Size = new System.Drawing.Size(1067, 502);
             this.dataGridView1.TabIndex = 3;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
+            this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
             // labelCount
             // 
@@ -351,11 +353,23 @@
             this.comboBoxColumn.Size = new System.Drawing.Size(121, 24);
             this.comboBoxColumn.TabIndex = 7;
             // 
+            // labelSelectedCount
+            // 
+            this.labelSelectedCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelSelectedCount.AutoSize = true;
+            this.labelSelectedCount.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.labelSelectedCount.Location = new System.Drawing.Point(730, 536);
+            this.labelSelectedCount.Name = "labelSelectedCount";
+            this.labelSelectedCount.Size = new System.Drawing.Size(16, 17);
+            this.labelSelectedCount.TabIndex = 8;
+            this.labelSelectedCount.Text = "0";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1067, 554);
+            this.Controls.Add(this.labelSelectedCount);
             this.Controls.Add(this.comboBoxColumn);
             this.Controls.Add(this.textBoxQuery);
             this.Controls.Add(this.labelStatus);
@@ -409,6 +423,7 @@
         private System.Windows.Forms.ToolStripComboBox visbleBox;
         private System.Windows.Forms.ToolStripMenuItem yourPinToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem randomToolStripMenuItem;
+        private System.Windows.Forms.Label labelSelectedCount;
     }
 }
 

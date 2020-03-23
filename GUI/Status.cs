@@ -19,16 +19,18 @@ namespace GUI
     public partial class Status : Form
     {
         public int limit = 40;
-        public static bool show = false;
-        public  static  string FOLLOWED = @"C:\Users\mauguzun\Desktop\stat.txt";
-        public static  string PINNED = "pinned.txt";
+        public bool show = false;
+        private bool firstTime = true;
+        
+        public static string FOLLOWED = @"C:\Users\mauguzun\Desktop\stat.txt";
+        public static string PINNED = "pinned.txt";
         public static List<string> proxieList = File.ReadAllLines(@"C:\my_work_files\pinterest\proxy.txt").ToList();
         public string[] RepinPinList { get; internal set; }
-        public SortableBindingList<Account> Accounts { get;  set; }
+        public SortableBindingList<Account> Accounts { get; set; }
         private PinAction pinAction = PinAction.Pin;
         public static List<string> AlreadyFollowedMyAccount = new List<string>();
         Dictionary<string, int> attemp = new Dictionary<string, int>();
-      
+
         int startedDriver = 0;
         int stopedDriver = 0;
         int succeAcction = 0;
@@ -42,19 +44,19 @@ namespace GUI
             {
 
                 pinAction = value;
-                this.Text = pinAction.ToString();
+                this.Text = pinAction.ToString() + this.Accounts.Count();
                 this.Refresh();
             }
 
         }
 
-       
+
 
         public Status()
         {
             InitializeComponent();
-            
-            if(File.Exists(FOLLOWED))
+
+            if (File.Exists(FOLLOWED))
             {
                 AlreadyFollowedMyAccount = File.ReadAllLines(FOLLOWED).ToList();
             }
@@ -64,7 +66,7 @@ namespace GUI
 
         private void RichTextBox_TextChanged(object sender, EventArgs e)
         {
-            if(richTextBox.Lines.Count() > 100)
+            if (richTextBox.Lines.Count() > 100)
             {
                 richTextBox.Text = "";
             }
@@ -97,7 +99,7 @@ namespace GUI
 
                         Pinterest pin = new Pinterest(drivers.Driver);
 
-                      
+
                         pin.MakeLogin(acc.Email, acc.Password);
                         pin.UserName = acc.UserName;
                         if (pin.CheckLogin())
@@ -108,29 +110,29 @@ namespace GUI
 
                                 pin.FillName();
                             }
-                            GUI.ActionInfo response = new ActionInfo(false,null);
+                            GUI.ActionInfo response = new ActionInfo(false, null);
                             while (true)
                             {
                                 switch (this.PinAction)
                                 {
                                     case PinAction.Follow:
-                                        limit = 5;
+                                        limit = 7;
                                         response = pin.Follow();
                                         break;
 
 
                                     case PinAction.Repin:
-                                   
+
                                         int d = RepinPinList.Count(); ;
                                         if (RepinPinList.Count() > succeAcction)
-                                            response = pin.Repin(RepinPinList[succeAcction]);
+                                            response = pin.Repin(RepinPinList[succeAcction], firstTime);
                                         else
                                             this.Close();
-                            
-                                          
-                                        
+
+                                        firstTime = false;
+
                                         break;
-                                        //
+                                    //
                                     case PinAction.RepinOther:
 
                                         pin.Driver.Url = "https://www.pinterest.com/";
@@ -139,17 +141,18 @@ namespace GUI
 
                                         foreach (var item in pinsElement)
                                         {
+                                            if(!hrefs.Contains(item.GetAttribute("href")))
                                             hrefs.Add(item.GetAttribute("href"));
                                         }
                                         foreach (var href in hrefs)
                                         {
-                                            response = pin.Repin(href);
+                                            response = pin.Repin(href, firstTime);
                                             if (response.Done == false)
                                                 break;
                                             else
                                                 AppendTextBox(href);
 
-                                            
+                                            firstTime = false;
                                         }
                                         break;
 
@@ -169,7 +172,7 @@ namespace GUI
                                                 AlreadyFollowedMyAccount.Add(item.UserName);
                                                 File.AppendAllLines(FOLLOWED, AlreadyFollowedMyAccount);
                                             }
-                                            AppendTextBox( " followed  " + item.UserName);
+                                            AppendTextBox(" followed  " + item.UserName);
                                         }
 
                                         break;
@@ -179,7 +182,7 @@ namespace GUI
                                         break;
 
                                 }
-                                if (this.pinAction == PinAction.Follow && response.Done == true )
+                                if (this.pinAction == PinAction.Follow && response.Done == true)
                                 {
                                     int? before = acc.Follow;
                                     DriverInstance temp = new DriverInstance();
@@ -195,9 +198,9 @@ namespace GUI
                                         break;
                                     }
                                 }
-                                else if(this.pinAction ==  PinAction.Pin && response.Done == true )
+                                else if (this.pinAction == PinAction.Pin && response.Done == true)
                                 {
-                                    File.AppendAllText(PINNED, response.Info + Environment.NewLine );
+                                    File.AppendAllText(PINNED, response.Info + Environment.NewLine);
                                 }
 
                                 if (attemp.Keys.Contains(acc.Email))
@@ -214,10 +217,10 @@ namespace GUI
                                     attemp[acc.Email] = 0;
                                 }
 
-                              
+
 
                                 succeAcction++;
-                                AppendTextBox(this.PinAction  + " - " + response.Done + " - " + response.Info );
+                                AppendTextBox(this.PinAction + " - " + response.Done + " - " + response.Info);
                                 acc.Status = this.PinAction + DateTime.Now.ToString();
 
                                 //if(response.Done == false)
@@ -226,7 +229,7 @@ namespace GUI
                                 //}
 
                             }
-                     
+
 
                         }
                         else
@@ -279,7 +282,7 @@ namespace GUI
                 this.Invoke(new Action<string>(AppendTextBox), new object[] { value });
                 return;
             }
-            
+
             richTextBox.Text = DateTime.Now.ToLongTimeString() + ":" + value + "\n" + richTextBox.Text;
             richTextBox.Refresh();
         }
@@ -305,33 +308,33 @@ namespace GUI
 
 
 
-            
+
             Task.Factory.StartNew(() =>
             {
                 Parallel.ForEach(Accounts, new ParallelOptions() { MaxDegreeOfParallelism = 12 }, (acc) =>
                 {
                     this.startedDriver++;
-                    DriverInstance drivers = new DriverInstance ();
+                    DriverInstance drivers = new DriverInstance();
                     drivers.InitDriver(false);
-                    acc = CheckOneAccount(acc,drivers);
+                    acc = CheckOneAccount(acc, drivers);
                     drivers.SuperQuit();
                     this.stopedDriver++;
                     AppendTextBox(acc.Email + " checked ");
                 });
 
             });
-         
+
             AppendTextBox("done ");
         }
 
         private Account CheckOneAccount(Account acc, DriverInstance drivers)
         {
-            
+
             AppendTextBox("check" + acc.Email);
             try
             {
                 Pinterest pin = new Pinterest(drivers.Driver);
-                acc = pin.AccountInfo(acc);     
+                acc = pin.AccountInfo(acc);
             }
 
             catch (Exception ex)
@@ -339,7 +342,7 @@ namespace GUI
                 acc.Status = "account not exist";
                 AccountManager.GetInstance().Save();
             }
-           
+
 
             return acc;
         }
@@ -353,13 +356,13 @@ namespace GUI
             labelInfo.Invoke((MethodInvoker)delegate
             {
                 // Running on the UI thread
-                labelInfo.Text =   Accounts.Count + "/start " + this.startedDriver + "/ stop " + this.stopedDriver + "/ good  " + this.succeAcction ;
+                labelInfo.Text = Accounts.Count + "/start " + this.startedDriver + "/ stop " + this.stopedDriver + "/ good  " + this.succeAcction;
             });
         }
 
         private void Setup()
         {
-           this.dataGridView1.DataSource =    Accounts  ;
+            this.dataGridView1.DataSource = Accounts;
             this.dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.AutoResizeColumns();

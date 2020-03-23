@@ -104,7 +104,7 @@ namespace GUI
                 }
                 Driver.Url = "https://pinterest.com";
                 Driver.Url = "https://pinterest.com";
-                if (Driver.FindElementsByCssSelector("[data-test-id='header-profile']").Count() != 0)
+                if (Driver.FindElementsByCssSelector("#HeaderContent").Count() != 0)
                 {
 
                     return true;
@@ -123,11 +123,16 @@ namespace GUI
 
          
 
-        public ActionInfo Repin(string url)
+        public ActionInfo Repin(string url,bool firstTime = false)
         {
+            
             this.Driver.Url = url;
+            if(firstTime)
+            {
+                Driver.Navigate();
+            }
+            Thread.Sleep(new TimeSpan(0, 0, 3));
 
-            Thread.Sleep(new TimeSpan(0, 0, 2));
             if (Driver.FindElementsByCssSelector(".experienceSystemPushOverlay").Count != 0)
             {
                 Driver.FindElementsByCssSelector(".experienceSystemPushOverlay")[0].Click();
@@ -150,7 +155,7 @@ namespace GUI
 
 
                 save[0].Click();
-
+                Thread.Sleep(new TimeSpan(0, 0,3));
 
                 var boards = Driver.FindElementsByCssSelector("div[data-test-id='boardWithoutSection']");
                 if (boards.Count() > 0)

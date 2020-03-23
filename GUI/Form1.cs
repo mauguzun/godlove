@@ -75,7 +75,7 @@ namespace GUI
         {
 
             Status status = new Status();
-            Status.show = show;
+            status.show = show;
             status.Accounts = new SortableBindingList<Account>(SelectAccount());
             status.Show();
             status.PinStart();
@@ -173,7 +173,9 @@ namespace GUI
         {
             Status status = new Status();
             status.Accounts = new SortableBindingList<Account>(SelectAccount());
-            status.Show(); Status.show = show;
+            status.Show();
+            status.PinAction = PinAction.CheckName;
+            status.show = show;
             status.AccountCheck();
         }
 
@@ -295,7 +297,8 @@ namespace GUI
             Status status = new Status();
             status.Accounts = new SortableBindingList<Account>(SelectAccount());
             status.PinAction = PinAction.Follow;
-            status.Show(); Status.show = show;
+            status.Show();
+            status.show = show;
             status.PinStart();
         }
 
@@ -305,7 +308,7 @@ namespace GUI
             status.Accounts = new SortableBindingList<Account>(SelectAccount());
             status.PinAction = PinAction.FollowSelf;
             status.Show();
-            Status.show = show;
+            status.show = show;
             status.PinStart();
         }
 
@@ -491,7 +494,7 @@ namespace GUI
             Status status = new Status();
             status.Accounts = new SortableBindingList<Account>(SelectAccount());
             status.Show();
-            Status.show = show;
+            status.show = show;
             status.PinAction = PinAction.Repin;
             status.RepinPinList = File.ReadAllLines(Status.PINNED);
 
@@ -503,9 +506,16 @@ namespace GUI
             Status status = new Status();
             status.Accounts = new SortableBindingList<Account>(SelectAccount());
             status.Show();
-            Status.show = show;
+            status.show = show;
             status.PinAction = PinAction.RepinOther;
             status.PinStart();
+        }
+
+        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+
+            labelSelectedCount.Text = dataGridView1.SelectedRows.Count.ToString();
+           
         }
     }
 

@@ -6,6 +6,7 @@
         Follow,
         Repin,
         RepinOther,
-        FollowSelf
+        FollowSelf,
+        CheckName,
     }
 }
