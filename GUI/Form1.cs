@@ -77,7 +77,9 @@ namespace GUI
             Status status = new Status();
             status.show = show;
             status.Accounts = new SortableBindingList<Account>(SelectAccount());
+            status.PinAction = PinAction.Pin;
             status.Show();
+   
             status.PinStart();
 
         }
@@ -516,6 +518,17 @@ namespace GUI
 
             labelSelectedCount.Text = dataGridView1.SelectedRows.Count.ToString();
            
+        }
+
+        private void proxyAssignToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            proxieList.AddRange(File.ReadAllLines(@"C:\my_work_files\pinterest\proxy.txt").ToList());
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 

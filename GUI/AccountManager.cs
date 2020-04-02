@@ -84,8 +84,28 @@ namespace GUI
             {
                 File.Delete(PATH);
 
-                foreach (Account account in Accounts.ToList())
+                var acc = new List<Account>();
+
+                foreach (var item in Accounts.ToList())
                 {
+                    if(acc.Where(x=>x.UserName == item.UserName).Any())
+                    {
+                        if (acc.Where(x => x.UserName == item.UserName).FirstOrDefault().Password == "trance_333")
+                        {
+                            acc.Where(x => x.UserName == item.UserName).FirstOrDefault().Password = item.Password;
+                        }
+                    }
+                    else
+                    {
+                        acc.Add(item);
+                    }
+                   
+                }
+
+                foreach (Account account in acc)
+                {
+
+                    
                     File.AppendAllText(PATH, account.ToString() + Environment.NewLine);
 
                 }

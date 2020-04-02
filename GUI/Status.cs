@@ -18,6 +18,7 @@ namespace GUI
 {
     public partial class Status : Form
     {
+        private const string PROXIEFILE = @"C:\my_work_files\pinterest\proxy.txt";
         public int limit = 40;
         public bool show = false;
         private bool firstTime = true;
@@ -263,8 +264,9 @@ namespace GUI
         {
             try
             {
-                proxieList.Remove(proxie.Replace("_", ":"));
-                File.WriteAllLines(@"C:\my_work_files\pinterest\proxy.txt", proxieList);
+                var list = File.ReadAllLines(PROXIEFILE).ToList();
+                list.Remove(proxie.Replace("_", ":"));
+                File.WriteAllLines(PROXIEFILE, list);
             }
             catch { }
         }

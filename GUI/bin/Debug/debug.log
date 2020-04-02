@@ -156,4 +156,26 @@
 [0306/164234.562:ERROR:crashpad_client_win.cc(505)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)
 [0316/204701.913:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
 [0318/111821.413:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
-                                                                                                                                                                                                                                                
+                                                                                                                                                                                                                                                [0324/194716.648:ERROR:crashpad_client_win.cc(505)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)
+[0325/141354.420:ERROR:process_info.cc(359)] UncheckedAllocate
+[0326/124955.228:ERROR:crashpad_client_win.cc(505)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)
+[0326/124955.277:ERROR:crashpad_client_win.cc(505)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)
+[0326/125001.436:ERROR:registration_protocol_win.cc(84)] TransactNamedPipe: The pipe has been ended. (0x6D)
+[0326/125002.289:ERROR:registration_protocol_win.cc(84)] TransactNamedPipe: The pipe has been ended. (0x6D)
+[0327/073527.628:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+[0327/073527.767:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+[0327/073528.012:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+[0327/073528.244:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+[0331/154805.352:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+[0331/154936.532:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+[0331/155211.027:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+[0331/155355.299:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+[0401/020503.785:ERROR:crashpad_client_win.cc(505)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)
+[0401/020610.739:ERROR:registration_protocol_win.cc(84)] TransactNamedPipe: The pipe has been ended. (0x6D)
+[0401/021146.315:ERROR:crashpad_client_win.cc(505)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)
+[0401/021146.532:ERROR:crashpad_client_win.cc(505)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)
+[0401/021206.953:ERROR:crashpad_client_win.cc(505)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)
+[0401/021242.124:ERROR:crashpad_client_win.cc(505)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)
+[0401/124850.754:ERROR:file_io_win.cc(161)] CreateFile D:\temp\scoped_dir383480_580714386\Crashpad\settings.dat: The system cannot find the path specified. (0x3)
+[0401/124850.756:ERROR:file_io_win.cc(170)] CreateFile D:\temp\scoped_dir383480_580714386\Crashpad\reports\476347db-907c-4ab6-a5e1-eb95d77da911.dmp: The system cannot find the path specified. (0x3)
+[0401/124850.757:ERROR:crash_report_exception_handler.cc(97)] PrepareNewCrashReport failed
