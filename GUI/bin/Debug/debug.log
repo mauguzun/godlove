@@ -179,3 +179,19 @@
 [0401/124850.754:ERROR:file_io_win.cc(161)] CreateFile D:\temp\scoped_dir383480_580714386\Crashpad\settings.dat: The system cannot find the path specified. (0x3)
 [0401/124850.756:ERROR:file_io_win.cc(170)] CreateFile D:\temp\scoped_dir383480_580714386\Crashpad\reports\476347db-907c-4ab6-a5e1-eb95d77da911.dmp: The system cannot find the path specified. (0x3)
 [0401/124850.757:ERROR:crash_report_exception_handler.cc(97)] PrepareNewCrashReport failed
+[0403/152317.267:ERROR:filesystem_win.cc(148)] DeleteFile D:\temp\scoped_dir146168_781737750\Crashpad\reports\e0f1cb6b-0781-43e0-b806-e81a6eba13be.dmp: The process cannot access the file because it is being used by another process. (0x20)
+[0403/152317.468:ERROR:filesystem_win.cc(148)] DeleteFile D:\temp\scoped_dir129508_1204933497\Crashpad\reports\b28cafe8-0f4a-4d5b-b221-0a6ec3e91c3d.dmp: The process cannot access the file because it is being used by another process. (0x20)
+[0403/152844.513:ERROR:process_info.cc(359)] UncheckedAllocate
+[0404/164551.432:ERROR:file_io_win.cc(161)] CreateFile D:\temp\scoped_dir30952_722867692\Crashpad\settings.dat: The system cannot find the path specified. (0x3)
+[0404/164551.432:ERROR:file_io_win.cc(170)] CreateFile D:\temp\scoped_dir30952_722867692\Crashpad\reports\35bebe8e-ee85-47f8-b1b2-dce5c9a1e1c4.dmp: The system cannot find the path specified. (0x3)
+[0404/164551.432:ERROR:crash_report_exception_handler.cc(97)] PrepareNewCrashReport failed
+[0405/104430.538:ERROR:crashpad_client_win.cc(505)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)
+[0405/163538.447:ERROR:crashpad_client_win.cc(505)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)
+[0405/163559.165:ERROR:crashpad_client_win.cc(505)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)
+[0405/163846.693:ERROR:registration_protocol_win.cc(84)] TransactNamedPipe: The pipe has been ended. (0x6D)
+[0405/163846.694:ERROR:file_io.cc(89)] ReadExactly: expected 40, observed 0
+[0408/111153.419:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+[0409/105741.345:ERROR:filesystem_win.cc(148)] DeleteFile C:\Users\mauguzun\AppData\Local\Google\Chrome\User Data\Crashpad\reports\f5735c57-c0cc-4692-b559-1b05bcc19e9d.dmp: The process cannot access the file because it is being used by another process. (0x20)
+[0410/213616.882:ERROR:filesystem_win.cc(148)] DeleteFile C:\Users\mauguzun\AppData\Local\Google\Chrome\User Data\Crashpad\reports\dfaf1474-8e64-43a7-9323-e1682cc93f35.dmp: The process cannot access the file because it is being used by another process. (0x20)
+[0411/111421.867:ERROR:crashpad_client_win.cc(505)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)
+[0412/104156.387:ERROR:crash_report_database_win.cc(580)] CreateDirectory D:\temp\scoped_dir416200_68628397\Crashpad: The system cannot find the path specified. (0x3)

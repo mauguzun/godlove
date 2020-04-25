@@ -313,15 +313,20 @@ namespace GUI
 
             Task.Factory.StartNew(() =>
             {
-                Parallel.ForEach(Accounts, new ParallelOptions() { MaxDegreeOfParallelism = 12 }, (acc) =>
+                Parallel.ForEach(Accounts, new ParallelOptions() { MaxDegreeOfParallelism = 14 }, (acc) =>
                 {
+                    AppendTextBox(acc.Email + " checked ");
                     this.startedDriver++;
                     DriverInstance drivers = new DriverInstance();
                     drivers.InitDriver(false);
                     acc = CheckOneAccount(acc, drivers);
                     drivers.SuperQuit();
                     this.stopedDriver++;
-                    AppendTextBox(acc.Email + " checked ");
+                    this.succeAcction++;
+                   
+                    acc.Status = this.PinAction + DateTime.Now.ToString();
+                    labelInfo.Text = Accounts.Count + "/start " + this.startedDriver + "/ stop " + this.stopedDriver + "/ good  " + this.succeAcction;
+
                 });
 
             });
