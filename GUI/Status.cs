@@ -94,7 +94,8 @@ namespace GUI
                         }
                         else
                         {
-                            drivers.InitDriver(show, acc.Proxie.Replace("_", ":"));
+                           
+                            drivers.InitDriver(show, new GetProxy.ProxyReader().GetList().OrderBy(x => Guid.NewGuid()).FirstOrDefault());
 
                         }
 

@@ -55,6 +55,7 @@
             this.addXmlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.visbleBox = new System.Windows.Forms.ToolStripComboBox();
+            this.pinDomainTxt = new System.Windows.Forms.ToolStripTextBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.labelCount = new System.Windows.Forms.Label();
@@ -95,7 +96,7 @@
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(123, 26);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
@@ -191,21 +192,21 @@
             // proxyAssignToolStripMenuItem
             // 
             this.proxyAssignToolStripMenuItem.Name = "proxyAssignToolStripMenuItem";
-            this.proxyAssignToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.proxyAssignToolStripMenuItem.Size = new System.Drawing.Size(193, 26);
             this.proxyAssignToolStripMenuItem.Text = "Proxy Assign";
             this.proxyAssignToolStripMenuItem.Click += new System.EventHandler(this.proxyAssignToolStripMenuItem_Click);
             // 
             // prooxyCheckerToolStripMenuItem
             // 
             this.prooxyCheckerToolStripMenuItem.Name = "prooxyCheckerToolStripMenuItem";
-            this.prooxyCheckerToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.prooxyCheckerToolStripMenuItem.Size = new System.Drawing.Size(193, 26);
             this.prooxyCheckerToolStripMenuItem.Text = "Prooxy Checker";
             this.prooxyCheckerToolStripMenuItem.Click += new System.EventHandler(this.prooxyCheckerToolStripMenuItem_Click);
             // 
             // clearProxyToolStripMenuItem
             // 
             this.clearProxyToolStripMenuItem.Name = "clearProxyToolStripMenuItem";
-            this.clearProxyToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.clearProxyToolStripMenuItem.Size = new System.Drawing.Size(193, 26);
             this.clearProxyToolStripMenuItem.Text = "Clear Proxy";
             this.clearProxyToolStripMenuItem.Click += new System.EventHandler(this.clearProxyToolStripMenuItem_Click);
             // 
@@ -268,7 +269,8 @@
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.visbleBox});
+            this.visbleBox,
+            this.pinDomainTxt});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(75, 24);
             this.optionsToolStripMenuItem.Text = "Options";
@@ -285,6 +287,13 @@
             this.visbleBox.Name = "visbleBox";
             this.visbleBox.Size = new System.Drawing.Size(121, 28);
             this.visbleBox.TextChanged += new System.EventHandler(this.visbleBox_TextChanged);
+            // 
+            // pinDomainTxt
+            // 
+            this.pinDomainTxt.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.pinDomainTxt.Name = "pinDomainTxt";
+            this.pinDomainTxt.Size = new System.Drawing.Size(100, 27);
+            this.pinDomainTxt.DoubleClick += new System.EventHandler(this.pinDomainTxt_DoubleClick);
             // 
             // statusStrip1
             // 
@@ -383,7 +392,6 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "Account Manager";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -426,6 +434,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripTextBox groupNameTxt;
         private System.Windows.Forms.ToolStripMenuItem setGroupBtn;
+        private System.Windows.Forms.ToolStripTextBox pinDomainTxt;
     }
 }
 

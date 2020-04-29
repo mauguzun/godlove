@@ -182,7 +182,9 @@ namespace GUI
 
         public ActionInfo MakePost()
         {
-            Driver.Url = "http://drum.nl.eu.org/get";
+           
+          
+            Driver.Url = Form1.pinSite;
             //
             Thread.Sleep(new TimeSpan(0, 0, 3));
             var search = Driver.FindElementsByCssSelector("#HeaderContent");

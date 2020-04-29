@@ -29,6 +29,7 @@ namespace GUI
         Thread updatePasswordThread;
         private List<Account> filteredAccounts;
         public static bool show = false;
+        public static string pinSite = "http://drum.nl.eu.org/get";
 
         public Form1()
         {
@@ -42,6 +43,7 @@ namespace GUI
             this.dataGridView1.AutoResizeColumns();
             this.dataGridView1.ReadOnly = true;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            pinDomainTxt.Text = pinSite;
         }
 
 
@@ -526,9 +528,10 @@ namespace GUI
 
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void pinDomainTxt_DoubleClick(object sender, EventArgs e)
         {
-
+            Form1.pinSite = pinDomainTxt.Text;
+            MessageBox.Show(Form1.pinSite);
         }
     }
 
