@@ -180,11 +180,11 @@ namespace GUI
 
 
 
-        public ActionInfo MakePost()
+        public ActionInfo MakePost(string url )
         {
-           
-          
-            Driver.Url = Form1.pinSite;
+
+
+            Driver.Url = url;
             //
             Thread.Sleep(new TimeSpan(0, 0, 3));
             var search = Driver.FindElementsByCssSelector("#HeaderContent");

@@ -19,12 +19,15 @@ namespace GUI
     public partial class Status : Form
     {
         private const string PROXIEFILE = @"C:\my_work_files\pinterest\proxy.txt";
-        public int limit = 40;
+        
+        public int limit = 5;
         public bool show = false;
         private bool firstTime = true;
-        
+
         public static string FOLLOWED = @"C:\Users\mauguzun\Desktop\stat.txt";
         public static string PINNED = "pinned.txt";
+        public static string CSV = @"C:\Users\mauguzun\Desktop\om.csv";
+
         public static List<string> proxieList = File.ReadAllLines(@"C:\my_work_files\pinterest\proxy.txt").ToList();
         public string[] RepinPinList { get; internal set; }
         public SortableBindingList<Account> Accounts { get; set; }
@@ -94,7 +97,7 @@ namespace GUI
                         }
                         else
                         {
-                           
+
                             drivers.InitDriver(show, new GetProxy.ProxyReader().GetList().OrderBy(x => Guid.NewGuid()).FirstOrDefault());
 
                         }
@@ -115,10 +118,11 @@ namespace GUI
                             GUI.ActionInfo response = new ActionInfo(false, null);
                             while (true)
                             {
+                                Dictionary<string, string> url = null;
                                 switch (this.PinAction)
                                 {
                                     case PinAction.Follow:
-                                        limit = 7;
+                                        limit = 5;
                                         response = pin.Follow();
                                         break;
 
@@ -143,8 +147,8 @@ namespace GUI
 
                                         foreach (var item in pinsElement)
                                         {
-                                            if(!hrefs.Contains(item.GetAttribute("href")))
-                                            hrefs.Add(item.GetAttribute("href"));
+                                            if (!hrefs.Contains(item.GetAttribute("href")))
+                                                hrefs.Add(item.GetAttribute("href"));
                                         }
                                         foreach (var href in hrefs)
                                         {
@@ -179,8 +183,21 @@ namespace GUI
 
                                         break;
 
+                                    case PinAction.PinCsv:
+                                        var urls = CsvManager.Instance;
+                                        url = urls.GetUrl(@"C:\Users\mauguzun\Desktop\om.csv");
+                                        if (url == null)
+                                        {
+
+                                            AppendTextBox("cant find csv line to pinn " + this.PinAction + acc.Email);
+                                            drivers.SuperQuit();
+                                            this.stopedDriver++;
+                                        }
+                                        response = pin.MakePost(url[url.Keys.FirstOrDefault()]);
+                                        break;
+
                                     default:
-                                        response = pin.MakePost();
+                                        response = pin.MakePost(Form1.pinSite);
                                         break;
 
                                 }
@@ -203,6 +220,12 @@ namespace GUI
                                 else if (this.pinAction == PinAction.Pin && response.Done == true)
                                 {
                                     File.AppendAllText(PINNED, response.Info + Environment.NewLine);
+                                }
+                                else if (this.pinAction == PinAction.PinCsv && response.Done == true)
+                                {
+                                    File.AppendAllText(PINNED, response.Info + Environment.NewLine);
+                                    var urls = CsvManager.Instance;
+                                    urls.Remove(CSV, url.Keys.FirstOrDefault());
                                 }
 
                                 if (attemp.Keys.Contains(acc.Email))
@@ -324,7 +347,7 @@ namespace GUI
                     drivers.SuperQuit();
                     this.stopedDriver++;
                     this.succeAcction++;
-                   
+
                     acc.Status = this.PinAction + DateTime.Now.ToString();
                     labelInfo.Text = Accounts.Count + "/start " + this.startedDriver + "/ stop " + this.stopedDriver + "/ good  " + this.succeAcction;
 

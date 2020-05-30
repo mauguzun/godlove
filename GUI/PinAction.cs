@@ -8,5 +8,6 @@
         RepinOther,
         FollowSelf,
         CheckName,
+        PinCsv,
     }
 }

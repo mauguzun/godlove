@@ -56,6 +56,7 @@
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.visbleBox = new System.Windows.Forms.ToolStripComboBox();
             this.pinDomainTxt = new System.Windows.Forms.ToolStripTextBox();
+            this.extraPinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.labelCount = new System.Windows.Forms.Label();
@@ -74,6 +75,7 @@
             this.openToolStripMenuItem,
             this.FolloMenu,
             this.PinMenuItem,
+            this.extraPinToolStripMenuItem,
             this.rePinToolStripMenuItem,
             this.toolStripMenuItem1,
             this.proxyToolStripMenuItem,
@@ -96,7 +98,7 @@
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(123, 26);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
@@ -295,6 +297,13 @@
             this.pinDomainTxt.Size = new System.Drawing.Size(100, 27);
             this.pinDomainTxt.DoubleClick += new System.EventHandler(this.pinDomainTxt_DoubleClick);
             // 
+            // extraPinToolStripMenuItem
+            // 
+            this.extraPinToolStripMenuItem.Name = "extraPinToolStripMenuItem";
+            this.extraPinToolStripMenuItem.Size = new System.Drawing.Size(80, 24);
+            this.extraPinToolStripMenuItem.Text = "Extra Pin";
+            this.extraPinToolStripMenuItem.Click += new System.EventHandler(this.extraPinToolStripMenuItem_Click);
+            // 
             // statusStrip1
             // 
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
@@ -435,6 +444,7 @@
         private System.Windows.Forms.ToolStripTextBox groupNameTxt;
         private System.Windows.Forms.ToolStripMenuItem setGroupBtn;
         private System.Windows.Forms.ToolStripTextBox pinDomainTxt;
+        private System.Windows.Forms.ToolStripMenuItem extraPinToolStripMenuItem;
     }
 }
 

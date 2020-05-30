@@ -533,6 +533,16 @@ namespace GUI
             Form1.pinSite = pinDomainTxt.Text;
             MessageBox.Show(Form1.pinSite);
         }
+
+        private void extraPinToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Status status = new Status();
+            status.Accounts = new SortableBindingList<Account>(SelectAccount());
+            status.Show();
+            status.show = show;
+            status.PinAction = PinAction.PinCsv;
+            status.PinStart();
+        }
     }
 
 
