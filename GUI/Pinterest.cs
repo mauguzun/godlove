@@ -138,6 +138,7 @@ namespace GUI
                 Driver.FindElementsByCssSelector(".experienceSystemPushOverlay")[0].Click();
 
             }
+              ((IJavaScriptExecutor)Driver).ExecuteScript("window.resizeTo(2000, 1000);");
             var save = Driver.FindElementsByCssSelector("[data-test-id='SaveButton']");
             if (save.Count() == 0)
             {
@@ -218,10 +219,7 @@ namespace GUI
 
                     if (pinnned.Count() > 0)
                     {
-
-
                         return new ActionInfo(true, pinnned[0].GetAttribute("href"));
-
                     }
                     else if (modal.Count() > 0)
                     {

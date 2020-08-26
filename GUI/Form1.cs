@@ -55,8 +55,11 @@ namespace GUI
                 string name = groupNameTxt.Text.Trim();
                 foreach (DataGridViewRow row in dataGridView1.SelectedRows)
                 {
-                    AccountManager.Accounts.First(x => x.Email == row.Cells[0].Value).Group = name;
-                    var select = AccountManager.Accounts.First(x => x.Email == row.Cells[0].Value);
+                    if (AccountManager.Accounts.Where(x => x.Email == row.Cells[0].Value).Any())
+                    {
+                        AccountManager.Accounts.FirstOrDefault(x => x.Email == row.Cells[0].Value).Group = name;
+                        var select = AccountManager.Accounts.First(x => x.Email == row.Cells[0].Value);
+                    }
 
                 }
                 this.dataGridView1.DataSource = AccountManager.Accounts;

@@ -27,7 +27,7 @@ namespace GodLoveMe.Utils
                  wc.Proxy = new WebProxy(hostPort[0], Int32.Parse(hostPort[1]));
                  try
                  {
-                     string f = wc.DownloadString(new Uri("https://google.com/"));
+                     string f = wc.DownloadString(new Uri("https://www.pinterest.com/"));
                      File.AppendAllText(Path, row+Environment.NewLine);
                     
                  }

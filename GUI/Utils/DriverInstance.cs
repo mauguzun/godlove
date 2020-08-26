@@ -27,10 +27,13 @@ namespace AddMeFast
             if (proxy != null)
                 options.AddArgument($"--proxy-server={proxy}");  //
 
+            var user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36";
 
-          
+
+
             options.AddArgument("--disable-infobars"); // disabling infobars
-            options.AddArgument("--disable-extensions"); // disabling extensions
+            options.AddArgument($"--user-agent={user_agent}"); // disabling infobars
+               options.AddArgument("--disable-extensions"); // disabling extensions
             options.AddArgument("--disable-gpu"); // applicable to windows os only
             options.AddArgument("--disable-dev-shm-usage"); // overcome limited resource problems
             options.AddArgument("--no-sandbox"); // Bypass OS security model

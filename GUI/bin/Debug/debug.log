@@ -218,3 +218,34 @@
 [0527/104623.799:ERROR:process_reader_win.cc(151)] SuspendThread: Access is denied. (0x5)
 [0527/104623.799:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
 [0527/104623.799:ERROR:exception_snapshot_win.cc(98)] thread ID 335188 not found in process
+[0605/183103.571:FATAL:thread_win.cc(25)] : Insufficient system resources exist to complete the requested service. (0x5AA)
+[0605/183106.813:ERROR:registration_protocol_win.cc(131)] TransactNamedPipe: The pipe has been ended. (0x6D)
+[0607/124054.911:ERROR:crashpad_client_win.cc(508)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)
+[0629/200736.867:ERROR:crashpad_client_win.cc(508)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)
+[0629/200902.225:ERROR:crashpad_client_win.cc(508)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)
+[0704/202520.977:ERROR:crashpad_client_win.cc(508)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)
+[0705/030141.671:ERROR:crashpad_client_win.cc(508)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)
+[0705/030151.719:ERROR:registration_protocol_win.cc(64)] BuildSecurityDescriptor: The specified network provider name is invalid. (0x4B4)
+[0705/030204.406:ERROR:crashpad_client_win.cc(508)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)
+[0705/030209.031:ERROR:registration_protocol_win.cc(64)] BuildSecurityDescriptor: The specified network provider name is invalid. (0x4B4)
+[0705/030209.059:ERROR:registration_protocol_win.cc(131)] TransactNamedPipe: The pipe has been ended. (0x6D)
+[0705/030209.059:ERROR:file_io.cc(89)] ReadExactly: expected 40, observed 0
+[0705/030318.191:ERROR:registration_protocol_win.cc(64)] BuildSecurityDescriptor: The specified network provider name is invalid. (0x4B4)
+[0705/030318.196:ERROR:crashpad_client_win.cc(508)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)
+[0705/030318.199:ERROR:crashpad_client_win.cc(132)] crash server failed to launch, self-terminating
+[0705/030355.639:ERROR:registration_protocol_win.cc(131)] TransactNamedPipe: The pipe has been ended. (0x6D)
+[0705/030537.055:ERROR:crashpad_client_win.cc(508)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)
+[0705/030742.403:ERROR:registration_protocol_win.cc(131)] TransactNamedPipe: The pipe has been ended. (0x6D)
+[0705/030742.404:ERROR:file_io.cc(89)] ReadExactly: expected 40, observed 0
+[0711/121927.104:ERROR:crashpad_client_win.cc(508)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)
+[0711/122049.496:ERROR:registration_protocol_win.cc(131)] TransactNamedPipe: Error (0x3AFC) while retrieving error. (0x6D)
+[0711/122250.179:ERROR:crashpad_client_win.cc(508)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)
+[0717/092523.320:ERROR:crashpad_client_win.cc(508)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)
+[0717/092629.487:ERROR:registration_protocol_win.cc(131)] TransactNamedPipe: The pipe has been ended. (0x6D)
+[0717/093618.543:ERROR:crashpad_client_win.cc(508)] CreateProcess: Not enough memory resources are available to process this command. (0x8)
+[0807/101940.279:ERROR:registration_protocol_win.cc(131)] TransactNamedPipe: The pipe has been ended. (0x6D)
+[0807/101940.283:ERROR:file_io.cc(89)] ReadExactly: expected 40, observed 0
+[0807/101940.303:ERROR:registration_protocol_win.cc(64)] BuildSecurityDescriptor: The specified network provider name is invalid. (0x4B4)
+[0807/101940.307:ERROR:crashpad_client_win.cc(508)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)
+[0807/101943.164:ERROR:registration_protocol_win.cc(131)] TransactNamedPipe: The pipe has been ended. (0x6D)
+[0820/150153.183:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
