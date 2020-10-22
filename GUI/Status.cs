@@ -331,10 +331,6 @@ namespace GUI
         {
             Setup();
             AppendTextBox("start check account");
-
-
-
-
             Task.Factory.StartNew(() =>
             {
                 Parallel.ForEach(Accounts, new ParallelOptions() { MaxDegreeOfParallelism = 14 }, (acc) =>

@@ -8,6 +8,7 @@ using OpenQA.Selenium.Remote;
 using PinCombain;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -195,7 +196,7 @@ namespace GUI
                 return new ActionInfo(false, "Not logined ?");
 
             }
-            else if (boards.Count == 0 && search.Count != 0)
+            else  if (boards.Count == 0 && search.Count != 0)
             {
 
                 var ss = Driver.GetScreenshot();
@@ -263,30 +264,30 @@ namespace GUI
 
         public ActionInfo Follow()
         {
-            Driver.Url = "https://www.pinterest.com/search/boards/?q=" + RandomValue.GetString(@"Data/city_names.txt") + "&rs=filter";
+            string url = "https://www.pinterest.com/search/boards/?q=" + RandomValue.GetString(@"Data/city_names.txt") + "&rs=filter";
 
-            var buttons = Driver.FindElementsByCssSelector("[data-test-id='board-follow-button'] button");
-
+            Driver.Url = url;
+            var urls = Driver.FindElementsByCssSelector(".boardLinkWrapper");
+            int count = 0;
             ///todo check if have different
-            foreach (var button in buttons)
+            foreach (var oneUrl in urls)
             {
+  
                 try
                 {
-
-                    button.Click();
+                    Driver.Url = oneUrl.GetAttribute("href");
+                    var x = Driver.FindElementsByCssSelector("[data-test-id='board-follow-button']");
+                    x[0].Click();
+                    count++;
+                  
 
                 }
                 catch
                 {
-                    Driver.FindElementByTagName("body").SendKeys(OpenQA.Selenium.Keys.ArrowDown);
-                    Driver.FindElementByTagName("body").SendKeys(OpenQA.Selenium.Keys.ArrowDown);
-                    Driver.FindElementByTagName("body").SendKeys(OpenQA.Selenium.Keys.ArrowDown);
-                    Driver.FindElementByTagName("body").SendKeys(OpenQA.Selenium.Keys.ArrowDown);
-                    Driver.FindElementByTagName("body").SendKeys(OpenQA.Selenium.Keys.ArrowDown);
-                    Driver.FindElementByTagName("body").SendKeys(OpenQA.Selenium.Keys.ArrowDown);
-                    Driver.FindElementByTagName("body").SendKeys(OpenQA.Selenium.Keys.ArrowDown);
-                }
+                    Driver.FindElementByTagName("body").SendKeys(OpenQA.Selenium.Keys.Enter);
 
+                }
+               
 
             }
             return new ActionInfo(true, "followed not checked");
@@ -405,7 +406,10 @@ namespace GUI
 
                 Driver.Url = $"https://www.pinterest.com/{this.UserName}/boards/";
                 Thread.Sleep(new TimeSpan(0, 0, 2));
-                var buttons = Driver.FindElementsByCssSelector("[data-test-id='createBoardCard']");
+
+                Driver.FindElementByCssSelector("[data-test-id='boardActionsButton']").Click();
+                Thread.Sleep(new TimeSpan(0, 0, 2));
+                var buttons = Driver.FindElementsByCssSelector("[data-test-id='Create board']");
                 buttons[0].Click();
                 Thread.Sleep(new TimeSpan(0, 0, 5));
 

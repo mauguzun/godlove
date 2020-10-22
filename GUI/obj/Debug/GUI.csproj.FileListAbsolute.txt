@@ -12,6 +12,7 @@ C:\GodLoveMe\GUI\bin\Debug\HtmlAgilityPack.pdb
 C:\GodLoveMe\GUI\bin\Debug\HtmlAgilityPack.xml
 C:\GodLoveMe\GUI\bin\Debug\Newtonsoft.Json.xml
 C:\GodLoveMe\GUI\bin\Debug\WebDriver.xml
+C:\GodLoveMe\GUI\obj\Debug\GUI.csprojAssemblyReference.cache
 C:\GodLoveMe\GUI\obj\Debug\GUI.Form1.resources
 C:\GodLoveMe\GUI\obj\Debug\GUI.Properties.Resources.resources
 C:\GodLoveMe\GUI\obj\Debug\GUI.Status.resources
@@ -20,4 +21,3 @@ C:\GodLoveMe\GUI\obj\Debug\GUI.csproj.CoreCompileInputs.cache
 C:\GodLoveMe\GUI\obj\Debug\GUI.csproj.CopyComplete
 C:\GodLoveMe\GUI\obj\Debug\GUI.exe
 C:\GodLoveMe\GUI\obj\Debug\GUI.pdb
-C:\GodLoveMe\GUI\obj\Debug\GUI.csprojAssemblyReference.cache

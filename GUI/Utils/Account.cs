@@ -16,7 +16,7 @@ namespace GUI
         public string Password { get; set; }
 
         public string FullName { get; set; }
-       
+
 
         public int? Followers { get; set; } = null;
         public int? Follow { get; set; } = null;
@@ -37,7 +37,20 @@ namespace GUI
 
         public string Group { get; set; } = null;
 
-        public string Status { get; set; } = null;
+        private string _status;
+        public string Status
+        {
+
+            get { return _status; }   // get method
+            set
+            {
+                if (_status != "deleted")
+                    _status = value;
+            }
+
+        }
+
+
 
         public override string ToString()
         {
@@ -57,8 +70,8 @@ namespace GUI
                     Email = splited[0],
                     Password = splited[1],
                     UserName = splited[2],
-                    
-                   
+
+
                 };
                 if (splited.Count() > 3)
                 {
