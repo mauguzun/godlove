@@ -20,7 +20,7 @@ namespace GUI
     {
         private const string PROXIEFILE = @"C:\my_work_files\pinterest\proxy.txt";
         
-        public int limit = 5;
+        public int limit = 15;
         public bool show = false;
         private bool firstTime = true;
 
@@ -142,13 +142,17 @@ namespace GUI
                                     case PinAction.RepinOther:
 
                                         pin.Driver.Url = "https://www.pinterest.com/";
-                                        var pinsElement = pin.Driver.FindElementsByCssSelector("[data-force-refresh]");
+                                        var pinsElement = pin.Driver.FindElementsByCssSelector("a");
                                         List<string> hrefs = new List<string>();
 
                                         foreach (var item in pinsElement)
                                         {
-                                            if (!hrefs.Contains(item.GetAttribute("href")))
+                                            var href = item.GetAttribute("href");
+                                            if (href != null && href.Contains("/pin/"))
+                                            {
                                                 hrefs.Add(item.GetAttribute("href"));
+                                            }
+                                              
                                         }
                                         foreach (var href in hrefs)
                                         {
