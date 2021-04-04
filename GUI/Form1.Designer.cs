@@ -110,7 +110,6 @@
             this.FolloMenu.Name = "FolloMenu";
             this.FolloMenu.Size = new System.Drawing.Size(67, 24);
             this.FolloMenu.Text = "Follow";
-            this.FolloMenu.Click += new System.EventHandler(this.FolloMenu_Click);
             // 
             // followToolStripMenuItem
             // 

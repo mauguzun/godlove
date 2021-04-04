@@ -112,9 +112,11 @@ namespace GUI
                 }
                 return false;
             }
-            catch(Exception e) {
+            catch (Exception e)
+            {
                 var s = e.Message;
-                return false; }
+                return false;
+            }
 
 
 
@@ -122,13 +124,13 @@ namespace GUI
 
         }
 
-         
 
-        public ActionInfo Repin(string url,bool firstTime = false)
+
+        public ActionInfo Repin(string url, bool firstTime = false)
         {
-            
+
             this.Driver.Url = url;
-            if(firstTime)
+            if (firstTime)
             {
                 Driver.Navigate();
             }
@@ -144,7 +146,7 @@ namespace GUI
             if (save.Count() == 0)
             {
                 save = Driver.FindElementsByCssSelector("[data-test-id='PinBetterSaveButton']");
-                if(save.Count != 0)
+                if (save.Count != 0)
                 {
                     save[0].Click();
                     return new ActionInfo(true, url);
@@ -157,7 +159,7 @@ namespace GUI
 
 
                 save[0].Click();
-                Thread.Sleep(new TimeSpan(0, 0,3));
+                Thread.Sleep(new TimeSpan(0, 0, 3));
 
                 var boards = Driver.FindElementsByCssSelector("div[data-test-id='boardWithoutSection']");
                 if (boards.Count() > 0)
@@ -182,7 +184,7 @@ namespace GUI
 
 
 
-        public ActionInfo MakePost(string url )
+        public ActionInfo MakePost(string url)
         {
 
 
@@ -196,7 +198,7 @@ namespace GUI
                 return new ActionInfo(false, "Not logined ?");
 
             }
-            else  if (boards.Count == 0 && search.Count != 0)
+            else if (boards.Count == 0 && search.Count != 0)
             {
 
                 var ss = Driver.GetScreenshot();
@@ -272,14 +274,14 @@ namespace GUI
             ///todo check if have different
             foreach (var oneUrl in urls)
             {
-  
+
                 try
                 {
                     Driver.Url = oneUrl.GetAttribute("href");
                     var x = Driver.FindElementsByCssSelector("[data-test-id='board-follow-button']");
                     x[0].Click();
                     count++;
-                  
+
 
                 }
                 catch
@@ -287,7 +289,7 @@ namespace GUI
                     Driver.FindElementByTagName("body").SendKeys(OpenQA.Selenium.Keys.Enter);
 
                 }
-               
+
 
             }
             return new ActionInfo(true, "followed not checked");
@@ -374,20 +376,36 @@ namespace GUI
 
 
 
-                var buttons = Driver.FindElementsByTagName("button");
-                foreach (var button in buttons)
-                {
-                    if (button.Text.Trim().ToUpper() == "DONE")
-                    {
-                        Actions actions = new Actions(Driver);
-                        actions.MoveToElement(Driver.FindElementByCssSelector("div[data-test-id='settings-header']"));
-                        actions.Perform();
-                        button.Click();
-                        Thread.Sleep(new TimeSpan(0, 0, 5));
-                        break;
 
+
+
+                var buttons = Driver.FindElementsByCssSelector("div[data-test-id='done-button']");
+                if (buttons.Count != 0)
+                {
+                    buttons[0].Click();
+                }
+                else
+                {
+                    buttons = Driver.FindElementsByTagName("button");
+                    foreach (var button in buttons)
+                    {
+                        if (button.Text.Trim().ToUpper() == "DONE")
+                        {
+                            Actions actions = new Actions(Driver);
+                            actions.MoveToElement(Driver.FindElementByCssSelector("div[data-test-id='settings-header']"));
+                            actions.Perform();
+                            button.Click();
+                            Thread.Sleep(new TimeSpan(0, 0, 5));
+                            break;
+
+                        }
                     }
                 }
+
+
+
+
+
                 AddImage();
                 return;
             }
@@ -453,7 +471,6 @@ namespace GUI
 
                     try
                     {
-
                         OpenQA.Selenium.Interactions.Actions action = new OpenQA.Selenium.Interactions.Actions(Driver);
                         action.MoveToElement(item);
                         item.Click();

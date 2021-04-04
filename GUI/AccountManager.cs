@@ -102,13 +102,14 @@ namespace GUI
                    
                 }
 
+
+                var csv = new StringBuilder();
                 foreach (Account account in acc)
                 {
-
-                    
-                    File.AppendAllText(PATH, account.ToString() + Environment.NewLine);
-
+                    csv.AppendLine(account.ToString());
                 }
+                File.WriteAllText(PATH, csv.ToString());
+
             }
             finally
             {

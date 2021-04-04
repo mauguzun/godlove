@@ -415,10 +415,7 @@ namespace GUI
 
         }
 
-        private void FolloMenu_Click(object sender, EventArgs e)
-        {
-
-        }
+       
 
         private void addXmlToolStripMenuItem_Click(object sender, EventArgs e)
         {
