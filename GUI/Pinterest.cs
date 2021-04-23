@@ -1,6 +1,7 @@
 ﻿using AddMeFast;
 using GodLoveMe.Pinterest;
 using GodLoveMe.Utils;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
@@ -11,6 +12,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -184,13 +186,24 @@ namespace GUI
 
 
 
-        public ActionInfo MakePost(string url)
+        public ActionInfo MakePost(string dataUrl)
         {
 
+            // downoload first
+            ResponseFromServer responseFromServer = null;
+            using (WebClient wc = new WebClient())
+            {
 
-            Driver.Url = url;
-            //
+                var json = wc.DownloadString(dataUrl);
+                var settings = new JsonSerializerSettings();
+                settings.CheckAdditionalContent = false;
+                responseFromServer = JsonConvert.DeserializeObject<ResponseFromServer>(json, settings);
+                var fileName = $"{responseFromServer.title}.jpg";
+                wc.DownloadFile(responseFromServer.img, $"Account/{fileName}");
+                responseFromServer.img = fileName;
+            }
             Thread.Sleep(new TimeSpan(0, 0, 3));
+            Driver.Url = "https://www.pinterest.de/pin-builder/";
             var search = Driver.FindElementsByCssSelector("#HeaderContent");
             var boards = Driver.FindElementsByCssSelector("div[data-test-id='boardWithoutSection']");
             if (search.Count == 0)
@@ -198,50 +211,66 @@ namespace GUI
                 return new ActionInfo(false, "Not logined ?");
 
             }
-            else if (boards.Count == 0 && search.Count != 0)
+            //else if (boards.Count == 0 && search.Count != 0)
+            //{
+
+            //    var ss = Driver.GetScreenshot();
+            //    ss.SaveAsFile("omg.png", ScreenshotImageFormat.Png);
+
+
+
+            //    CreateBoard();
+            //    return new ActionInfo(true, "We make new board ! ");
+
+
+            try
             {
 
-                var ss = Driver.GetScreenshot();
-                ss.SaveAsFile("omg.png", ScreenshotImageFormat.Png);
+                Driver.FindElementByCssSelector("[placeholder='Add a destination link']").SendKeys(responseFromServer.url);
+                Driver.FindElementByCssSelector("[placeholder='Add your title']").SendKeys(responseFromServer.title);
+                Driver.FindElementByCssSelector("[contenteditable='true']").SendKeys(responseFromServer.title);
+                var item = Driver.FindElementByCssSelector("[data-test-id='media-empty-view']");
+
+                OpenQA.Selenium.Interactions.Actions action = new OpenQA.Selenium.Interactions.Actions(Driver);
+                action.MoveToElement(item);
+                item.Click();
+                Thread.Sleep(new TimeSpan(0, 0, 5));
+
+                IJavaScriptExecutor js = (IJavaScriptExecutor)Driver;
+                string count = (string)js.ExecuteScript("document.querySelector('input[type=file]').setAttribute('style', 'display:block');");
+
+                var image = Driver.FindElementByCssSelector("input[type=file]");
+                if (image != null && image.Enabled && image.Displayed)
+                {
+                    image.SendKeys($"Account/{responseFromServer.img}");
+                    Thread.Sleep(new TimeSpan(0, 0, 10));
+                
+                }
+
+                Driver.FindElementByCssSelector("[data-test-id='board-dropdown-save-button']")?.Click();
+
+                Thread.Sleep(new TimeSpan(0, 0, 7));
+                var pinnned = Driver.FindElementsByCssSelector("[data-test-id='seeItNow'] a");
+                var modal = Driver.FindElementsByCssSelector("[data-test-id='error-modal']");
 
 
+                if (pinnned.Count() > 0)
+                {
+                    return new ActionInfo(true, pinnned[0].GetAttribute("href"));
+                }
+                else if (modal.Count() > 0)
+                {
 
-                CreateBoard();
-                return new ActionInfo(true, "We make new board ! ");
+                    return new ActionInfo(false, modal[0].Text);
+                }
 
+                return new ActionInfo(false, "Extra false"); ;
             }
-            foreach (var board in boards)
+            catch (Exception ex)
             {
-                try
-                {
-                    board.Click();
-                    Thread.Sleep(new TimeSpan(0, 0, 7));
-                    var pinnned = Driver.FindElementsByCssSelector("[data-test-id='seeItNow'] a");
-                    var modal = Driver.FindElementsByCssSelector("[data-test-id='error-modal']");
-
-
-                    if (pinnned.Count() > 0)
-                    {
-                        return new ActionInfo(true, pinnned[0].GetAttribute("href"));
-                    }
-                    else if (modal.Count() > 0)
-                    {
-
-                        return new ActionInfo(false, modal[0].Text);
-                    }
-
-                    return new ActionInfo(false, "Extra false"); ;
-                }
-                catch (Exception ex)
-                {
-
-
-                    return new ActionInfo(true, ex.Message); ;
-
-                }
-
+                return new ActionInfo(true, ex.Message); ;
             }
-            return new ActionInfo(false, "Extra false"); ;
+            
         }
 
         public ActionInfo Follow(string nickname)

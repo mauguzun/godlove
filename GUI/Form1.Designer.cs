@@ -36,6 +36,7 @@
             this.followToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.followWhere0ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PinMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.extraPinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rePinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.randomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.yourPinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,7 +57,6 @@
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.visbleBox = new System.Windows.Forms.ToolStripComboBox();
             this.pinDomainTxt = new System.Windows.Forms.ToolStripTextBox();
-            this.extraPinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.labelCount = new System.Windows.Forms.Label();
@@ -131,6 +131,13 @@
             this.PinMenuItem.Size = new System.Drawing.Size(43, 24);
             this.PinMenuItem.Text = "Pin";
             this.PinMenuItem.Click += new System.EventHandler(this.PinMenuItem_Click);
+            // 
+            // extraPinToolStripMenuItem
+            // 
+            this.extraPinToolStripMenuItem.Name = "extraPinToolStripMenuItem";
+            this.extraPinToolStripMenuItem.Size = new System.Drawing.Size(80, 24);
+            this.extraPinToolStripMenuItem.Text = "Extra Pin";
+            this.extraPinToolStripMenuItem.Click += new System.EventHandler(this.extraPinToolStripMenuItem_Click);
             // 
             // rePinToolStripMenuItem
             // 
@@ -296,13 +303,6 @@
             this.pinDomainTxt.Size = new System.Drawing.Size(100, 27);
             this.pinDomainTxt.DoubleClick += new System.EventHandler(this.pinDomainTxt_DoubleClick);
             // 
-            // extraPinToolStripMenuItem
-            // 
-            this.extraPinToolStripMenuItem.Name = "extraPinToolStripMenuItem";
-            this.extraPinToolStripMenuItem.Size = new System.Drawing.Size(80, 24);
-            this.extraPinToolStripMenuItem.Text = "Extra Pin";
-            this.extraPinToolStripMenuItem.Click += new System.EventHandler(this.extraPinToolStripMenuItem_Click);
-            // 
             // statusStrip1
             // 
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
@@ -400,6 +400,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "Account Manager";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();

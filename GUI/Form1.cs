@@ -2,6 +2,7 @@
 using GodLoveMe;
 using GodLoveMe.Pinterest;
 using GodLoveMe.Utils;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,6 +10,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -542,6 +544,11 @@ namespace GUI
             status.show = show;
             status.PinAction = PinAction.PinCsv;
             status.PinStart();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+           
         }
     }
 
