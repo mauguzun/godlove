@@ -190,20 +190,9 @@ namespace GUI
         {
 
             // downoload first
-            ResponseFromServer responseFromServer = null;
-            using (WebClient wc = new WebClient())
-            {
-
-                var json = wc.DownloadString(dataUrl);
-                var settings = new JsonSerializerSettings();
-                settings.CheckAdditionalContent = false;
-                responseFromServer = JsonConvert.DeserializeObject<ResponseFromServer>(json, settings);
-                var fileName = $"{responseFromServer.title}.jpg";
-                wc.DownloadFile(responseFromServer.img, $"Account/{fileName}");
-                responseFromServer.img = fileName;
-            }
-            Thread.Sleep(new TimeSpan(0, 0, 3));
-            Driver.Url = "https://www.pinterest.de/pin-builder/";
+         
+          
+            Driver.Url = "https://www.pinterest.com/pin-builder/";
             var search = Driver.FindElementsByCssSelector("#HeaderContent");
             var boards = Driver.FindElementsByCssSelector("div[data-test-id='boardWithoutSection']");
             if (search.Count == 0)
@@ -225,11 +214,23 @@ namespace GUI
 
             try
             {
+                ResponseFromServer responseFromServer = null;
+                using (WebClient wc = new WebClient())
+                {
+
+                    var json = wc.DownloadString(dataUrl);
+                    var settings = new JsonSerializerSettings();
+                    settings.CheckAdditionalContent = false;
+                    responseFromServer = JsonConvert.DeserializeObject<ResponseFromServer>(json, settings);
+                    var fileName = $"{responseFromServer.title}.jpg";
+                    wc.DownloadFile(responseFromServer.img, $"Account/{fileName}");
+                    responseFromServer.img = fileName;
+                }
 
                 Driver.FindElementByCssSelector("[placeholder='Add a destination link']").SendKeys(responseFromServer.url);
                 Driver.FindElementByCssSelector("[placeholder='Add your title']").SendKeys(responseFromServer.title);
-                Driver.FindElementByCssSelector("[contenteditable='true']").SendKeys(responseFromServer.title);
-                var item = Driver.FindElementByCssSelector("[data-test-id='media-empty-view']");
+                Driver.FindElementByCssSelector("[contenteditable='true']").SendKeys(  responseFromServer.desc.Substring(0,499));
+                var item = Driver.FindElementByCssSelector("[data-tutorial-id='pin-builder-media-draft-view']");
 
                 OpenQA.Selenium.Interactions.Actions action = new OpenQA.Selenium.Interactions.Actions(Driver);
                 action.MoveToElement(item);
@@ -242,8 +243,8 @@ namespace GUI
                 var image = Driver.FindElementByCssSelector("input[type=file]");
                 if (image != null && image.Enabled && image.Displayed)
                 {
-                    image.SendKeys($"Account/{responseFromServer.img}");
-                    Thread.Sleep(new TimeSpan(0, 0, 10));
+                    image.SendKeys($@"C:\GodLoveMe\GUI\bin\Debug\Account\{responseFromServer.img}");
+                    Thread.Sleep(new TimeSpan(0, 0, 7));
                 
                 }
 

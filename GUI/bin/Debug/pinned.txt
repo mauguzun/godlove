@@ -5647,3 +5647,20 @@ https://nl.pinterest.com/pin/844776842605661216
 https://www.pinterest.com.au/pin/1135329387282104354
 https://www.pinterest.com.au/pin/1135329387282104355
 We make new board ! 
+element click intercepted: Element <div data-test-id="media-empty-view" class="XiG Zr3 hUC s2n sLG xcv L4E zI7 iyn Hsu" style="height: 100%;">...</div> is not clickable at point (171, 387). Other element would receive the click: <input id="media-upload-input-8d6218a3-faae-436b-b56a-650eb11b79e0" type="file" accept="image/bmp,image/gif,image/jpeg,image/png,image/tiff,image/webp" aria-hidden="true" style="cursor: pointer; height: 100%; opacity: 0; position: absolute; width: 100%; left: 0px; top: 0px; font-size: 0px;">
+  (Session info: headless chrome=90.0.4430.85)
+element click intercepted: Element <div data-test-id="media-empty-view" class="XiG Zr3 hUC s2n sLG xcv L4E zI7 iyn Hsu" style="height: 100%;">...</div> is not clickable at point (169, 387). Other element would receive the click: <input id="media-upload-input-485e89a4-7d8f-455f-be4e-73a97e419d83" type="file" accept="image/bmp,image/gif,image/jpeg,image/png,image/tiff,image/webp" aria-hidden="true" style="cursor: pointer; height: 100%; opacity: 0; position: absolute; width: 100%; left: 0px; top: 0px; font-size: 0px;">
+  (Session info: headless chrome=90.0.4430.85)
+element click intercepted: Element <div data-test-id="media-empty-view" class="XiG Zr3 hUC s2n sLG xcv L4E zI7 iyn Hsu" style="height: 100%;">...</div> is not clickable at point (169, 387). Other element would receive the click: <input id="media-upload-input-504de88d-0ed6-40a0-a6c9-f1f00af509c1" type="file" accept="image/bmp,image/gif,image/jpeg,image/png,image/tiff,image/webp" aria-hidden="true" style="cursor: pointer; height: 100%; opacity: 0; position: absolute; width: 100%; left: 0px; top: 0px; font-size: 0px;">
+  (Session info: headless chrome=90.0.4430.85)
+element click intercepted: Element <div data-test-id="media-empty-view" class="XiG Zr3 hUC s2n sLG xcv L4E zI7 iyn Hsu" style="height: 100%;">...</div> is not clickable at point (291, 484). Other element would receive the click: <input id="media-upload-input-663dd7a0-3628-4769-8983-bc4fdb451b51" type="file" accept="image/bmp,image/gif,image/jpeg,image/png,image/tiff,image/webp" aria-hidden="true" style="cursor: pointer; height: 100%; opacity: 0; position: absolute; width: 100%; left: 0px; top: 0px; font-size: 0px;">
+  (Session info: chrome=90.0.4430.85)
+unknown error: path is not absolute: Account/Creamy chicken and bacon alfredo soup.jpg
+  (Session info: chrome=90.0.4430.85)
+unknown error: path is not absolute: Account/Asparagus Sweet Potato Chicken Skillet.jpg
+  (Session info: chrome=90.0.4430.85)
+no such element: Unable to locate element: {"method":"css selector","selector":"[placeholder='Add a destination link']"}
+  (Session info: chrome=90.0.4430.85)
+unknown error: path is not absolute: Account/5-Ingredient Vegetable Fried Rice.jpg
+  (Session info: chrome=90.0.4430.85)
+https://www.pinterest.com/pin/660340364114577343
