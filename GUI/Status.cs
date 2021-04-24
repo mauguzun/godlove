@@ -337,7 +337,7 @@ namespace GUI
             AppendTextBox("start check account");
             Task.Factory.StartNew(() =>
             {
-                Parallel.ForEach(Accounts, new ParallelOptions() { MaxDegreeOfParallelism = 14 }, (acc) =>
+                Parallel.ForEach(Accounts, new ParallelOptions() { MaxDegreeOfParallelism = 25 }, (acc) =>
                 {
                     AppendTextBox(acc.Email + " checked ");
                     this.startedDriver++;

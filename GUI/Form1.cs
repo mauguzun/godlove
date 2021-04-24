@@ -80,7 +80,11 @@ namespace GUI
 
         private void PinMenuItem_Click(object sender, EventArgs e)
         {
-
+            var files = Directory.GetFiles(@"C:\GodLoveMe\GUI\bin\Debug\Account\");
+            foreach (var item in files)
+            {
+                File.Delete(item);
+            }
             Status status = new Status();
             status.show = show;
             status.Accounts = new SortableBindingList<Account>(SelectAccount());

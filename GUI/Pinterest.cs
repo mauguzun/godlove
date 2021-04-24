@@ -193,6 +193,7 @@ namespace GUI
          
           
             Driver.Url = "https://www.pinterest.com/pin-builder/";
+
             var search = Driver.FindElementsByCssSelector("#HeaderContent");
             var boards = Driver.FindElementsByCssSelector("div[data-test-id='boardWithoutSection']");
             if (search.Count == 0)
@@ -229,7 +230,20 @@ namespace GUI
 
                 Driver.FindElementByCssSelector("[placeholder='Add a destination link']").SendKeys(responseFromServer.url);
                 Driver.FindElementByCssSelector("[placeholder='Add your title']").SendKeys(responseFromServer.title);
-                Driver.FindElementByCssSelector("[contenteditable='true']").SendKeys(  responseFromServer.desc.Substring(0,499));
+                Thread.Sleep(new TimeSpan(0, 0, 5));
+
+                try {
+
+                    var x = Driver.FindElementsByCssSelector("[contenteditable='true']");
+                    OpenQA.Selenium.Interactions.Actions actions = new OpenQA.Selenium.Interactions.Actions(Driver);
+                    actions.MoveToElement(x[0]);
+                    actions.Click();
+                    x[0].SendKeys(responseFromServer.desc.Length > 500 ?  responseFromServer.desc.Substring(0, 499) : responseFromServer.desc);
+                }
+                catch (Exception e){
+                    var asdf = e;
+                }
+               
                 var item = Driver.FindElementByCssSelector("[data-tutorial-id='pin-builder-media-draft-view']");
 
                 OpenQA.Selenium.Interactions.Actions action = new OpenQA.Selenium.Interactions.Actions(Driver);
@@ -244,13 +258,13 @@ namespace GUI
                 if (image != null && image.Enabled && image.Displayed)
                 {
                     image.SendKeys($@"C:\GodLoveMe\GUI\bin\Debug\Account\{responseFromServer.img}");
-                    Thread.Sleep(new TimeSpan(0, 0, 7));
+                    Thread.Sleep(new TimeSpan(0, 0, 5));
                 
                 }
 
                 Driver.FindElementByCssSelector("[data-test-id='board-dropdown-save-button']")?.Click();
 
-                Thread.Sleep(new TimeSpan(0, 0, 7));
+                Thread.Sleep(new TimeSpan(0, 0, 5));
                 var pinnned = Driver.FindElementsByCssSelector("[data-test-id='seeItNow'] a");
                 var modal = Driver.FindElementsByCssSelector("[data-test-id='error-modal']");
 

@@ -44,7 +44,7 @@ namespace GUI
             get { return _status; }   // get method
             set
             {
-                if (_status != "deleted")
+               // if (_status != "deleted")
                     _status = value;
             }
 
