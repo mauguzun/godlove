@@ -83,7 +83,6 @@ namespace GUI
             AppendTextBox("start ");
             Thread t = new Thread(() =>
             {
-
                 Parallel.ForEach(Accounts, new ParallelOptions() { MaxDegreeOfParallelism = 7 }, (acc) =>
                 {
                     DriverInstance drivers = new DriverInstance();
@@ -97,15 +96,17 @@ namespace GUI
                         }
                         else
                         {
-
                             drivers.InitDriver(show, new GetProxy.ProxyReader().GetList().OrderBy(x => Guid.NewGuid()).FirstOrDefault());
-
                         }
 
                         Pinterest pin = new Pinterest(drivers.Driver);
 
 
                         pin.MakeLogin(acc.Email, acc.Password);
+                        if(acc.Boards == "0")
+                        {
+                            pin.CreateBoard(acc.UserName);
+                        }
                         pin.UserName = acc.UserName;
                         if (pin.CheckLogin())
                         {

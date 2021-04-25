@@ -209,7 +209,7 @@ namespace GUI
 
 
 
-            //    CreateBoard();
+            //   CreateBoard();
             //    return new ActionInfo(true, "We make new board ! ");
 
 
@@ -461,12 +461,12 @@ namespace GUI
             }
         }
 
-        public bool CreateBoard()
+        public bool CreateBoard(string username)
         {
             try
             {
 
-                Driver.Url = $"https://www.pinterest.com/{this.UserName}/boards/";
+                Driver.Url = $"https://www.pinterest.com/{username}/boards/";
                 Thread.Sleep(new TimeSpan(0, 0, 2));
 
                 Driver.FindElementByCssSelector("[data-test-id='boardActionsButton']").Click();
